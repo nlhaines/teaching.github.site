@@ -1,0 +1,5 @@
+Copyright Noah Libby-Haines. All rights reserved.
+
+This public build is intentionally minified and obfuscated. It is provided for
+viewing and classroom demonstration only. Copying, redistribution, reverse
+engineering, or derivative use requires written permission.

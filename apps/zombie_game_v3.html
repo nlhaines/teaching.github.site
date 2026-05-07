@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zombie Apocalypse Survival Game</title>
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background:#0a0a0a;
+  color:#e8e8e0;
+  font-family:'Share Tech Mono',monospace;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+.bg {
+  position:fixed; inset:0;
+  background:
+    radial-gradient(ellipse at 20% 80%,rgba(30,60,20,0.3) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 20%,rgba(60,20,10,0.3) 0%,transparent 50%),
+    #0a0a0a;
+  z-index:0;
+}
+.scanlines {
+  position:fixed; inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.12) 2px,rgba(0,0,0,0.12) 4px);
+  pointer-events:none; z-index:1;
+}
+
+/* LOBBY */
+#lobby {
+  position:relative; z-index:2;
+  min-height:100vh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:2rem; text-align:center; padding:2rem;
+}
+.game-title {
+  font-family:'Creepster',cursive;
+  font-size:clamp(3rem,8vw,6rem);
+  color:#7fff00;
+  text-shadow:0 0 30px rgba(127,255,0,0.4);
+  line-height:1.1; letter-spacing:2px;
+}
+.game-subtitle { font-size:1.1rem; color:#888; letter-spacing:4px; text-transform:uppercase; }
+.blood-divider { width:200px; height:3px; background:linear-gradient(90deg,transparent,#8b0000,#cc0000,#8b0000,transparent); }
+
+.team-count-grid {
+  display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;
+}
+.count-btn {
+  background:rgba(0,0,0,0.5); border:1px solid #333; color:#888;
+  padding:1rem 1.5rem; font-family:'Share Tech Mono',monospace; font-size:1.5rem;
+  cursor:pointer; border-radius:6px; transition:all 0.2s; min-width:60px;
+}
+.count-btn:hover, .count-btn.active { border-color:#7fff00; color:#7fff00; background:rgba(127,255,0,0.08); }
+
+/* SETUP PHASE */
+#setup-phase {
+  position:relative; z-index:2;
+  display:none; flex-direction:column;
+  min-height:100vh;
+}
+
+.setup-header {
+  background:rgba(0,0,0,0.8); border-bottom:1px solid #2a2a2a;
+  padding:1rem 1.5rem;
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  flex-wrap:wrap;
+}
+.setup-step-label { font-size:0.7rem; letter-spacing:3px; color:#555; text-transform:uppercase; }
+.setup-step-title { font-family:'Creepster',cursive; font-size:1.8rem; color:#cc0000; }
+
+.team-setup-grid {
+  display:grid;
+  flex:1;
+  overflow:auto;
+}
+
+.team-setup-pane {
+  border-right:1px solid #1a1a1a;
+  padding:1.5rem 1rem;
+  display:flex; flex-direction:column; gap:1rem;
+  overflow-y:auto;
+}
+.team-setup-pane:last-child { border-right:none; }
+
+.pane-team-label {
+  font-size:0.65rem; letter-spacing:3px; color:#555; text-transform:uppercase;
+}
+.pane-team-name-input {
+  background:rgba(0,0,0,0.5); border:1px solid #333; color:#e8e8e0;
+  padding:0.5rem 0.75rem; font-family:'Share Tech Mono',monospace; font-size:0.9rem;
+  border-radius:4px; width:100%;
+}
+.pane-team-name-input:focus { outline:none; border-color:#7fff00; }
+
+.selection-subtitle { font-size:0.7rem; letter-spacing:2px; color:#555; text-transform:uppercase; margin-top:0.5rem; }
+
+.item-grid {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(70px,1fr)); gap:6px;
+}
+.item-card {
+  background:rgba(0,0,0,0.4); border:1px solid #2a2a2a; border-radius:6px;
+  padding:0.4rem; cursor:pointer; text-align:center;
+  transition:all 0.15s; display:flex; flex-direction:column; align-items:center; gap:3px;
+}
+.item-card:hover { border-color:#444; }
+.item-card.selected-item { border-color:#7fff00; background:rgba(127,255,0,0.08); }
+.item-card.selected-member { border-color:#6495ed; background:rgba(100,149,237,0.08); }
+.item-card .ic-emoji { font-size:1.4rem; }
+.item-card .ic-name { font-size:0.55rem; letter-spacing:1px; color:#666; text-transform:uppercase; line-height:1.2; }
+.item-card.selected-item .ic-name { color:#7fff00; }
+.item-card.selected-member .ic-name { color:#6495ed; }
+
+.member-names-list { display:flex; flex-direction:column; gap:5px; }
+.member-name-row { display:flex; align-items:center; gap:6px; }
+.member-name-row input {
+  background:rgba(0,0,0,0.4); border:1px solid #2a2a2a; color:#e8e8e0;
+  padding:3px 8px; font-family:'Share Tech Mono',monospace; font-size:0.75rem;
+  border-radius:3px; flex:1;
+}
+.member-name-row input:focus { outline:none; border-color:#6495ed; }
+
+.sel-count { font-size:0.65rem; color:#555; letter-spacing:1px; }
+.sel-count span { color:#7fff00; }
+
+.setup-footer {
+  background:rgba(0,0,0,0.8); border-top:1px solid #2a2a2a;
+  padding:1rem 1.5rem; display:flex; justify-content:flex-end; gap:1rem; align-items:center;
+}
+
+/* GAME PHASE */
+#game-phase {
+  position:relative; z-index:2;
+  display:none; flex-direction:column;
+  height:100vh; overflow:hidden;
+}
+
+.game-header {
+  background:rgba(0,0,0,0.9); border-bottom:1px solid #2a2a2a;
+  padding:0.5rem 1rem;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-shrink:0;
+}
+.game-header-title { font-family:'Creepster',cursive; font-size:1.4rem; color:#7fff00; }
+.game-progress { display:flex; gap:5px; align-items:center; }
+.prog-dot { width:10px; height:10px; border-radius:50%; background:#2a2a2a; transition:background 0.3s; }
+.prog-dot.done { background:#555; }
+.prog-dot.current { background:#7fff00; }
+
+/* SHARED SCENE PANEL */
+#scene-panel {
+  border-bottom:2px solid #2a2a2a;
+  padding:1rem 2rem;
+  display:flex; align-items:center; gap:1.5rem;
+  flex-shrink:0;
+  background:rgba(0,0,0,0.5);
+}
+#scene-panel-emoji { font-size:2.5rem; flex-shrink:0; }
+#scene-panel-body { flex:1; }
+#scene-panel-title { font-family:'Creepster',cursive; font-size:1.8rem; color:#cc0000; line-height:1; margin-bottom:0.4rem; }
+#scene-panel-text { font-size:0.9rem; line-height:1.8; color:#c8c8bc; }
+#scene-panel-text em { color:#7fff00; font-style:normal; }
+#scene-panel-decision { font-size:0.85rem; color:#888; margin-top:0.4rem; font-style:italic; }
+
+.panes-wrapper {
+  display:flex; flex-direction:column; flex:1; overflow:hidden; min-height:0;
+}
+
+.panes-container {
+  display:grid; flex:1; min-height:0;
+}
+
+/* PANE */
+.game-pane {
+  border-right:1px solid #1a1a1a;
+  display:flex; flex-direction:column;
+  overflow:hidden;
+}
+.game-pane:last-child { border-right:none; }
+
+.pane-header {
+  background:rgba(0,0,0,0.7); border-bottom:1px solid #1a1a1a;
+  padding:0.5rem 0.75rem;
+  display:flex; align-items:center; justify-content:space-between; gap:0.5rem; flex-wrap:wrap;
+  flex-shrink:0;
+}
+.pane-team-title { font-family:'Creepster',cursive; font-size:1.2rem; color:#cc0000; }
+.pane-status { display:flex; gap:4px; flex-wrap:wrap; }
+.ptag {
+  font-size:0.7rem; padding:2px 8px; border-radius:3px; letter-spacing:0.5px;
+  border:1px solid; white-space:nowrap;
+}
+.ptag.item { border-color:rgba(127,255,0,0.3); color:#7fff00; background:rgba(127,255,0,0.08); }
+.ptag.member { border-color:rgba(100,149,237,0.3); color:#6495ed; background:rgba(100,149,237,0.08); }
+.ptag.lost { border-color:rgba(139,0,0,0.3); color:#555; background:rgba(139,0,0,0.1); text-decoration:line-through; }
+
+.pane-body { flex:1; overflow-y:auto; padding:0.75rem; display:flex; flex-direction:column; gap:0.6rem; min-height:0; }
+
+.choice-btns { display:flex; flex-direction:column; gap:6px; }
+.choice-btn-sm {
+  background:rgba(0,0,0,0.4); border:1px solid #2a2a2a; color:#c8c8bc;
+  padding:0.6rem 0.9rem; font-family:'Share Tech Mono',monospace; font-size:0.85rem;
+  cursor:pointer; text-align:left; border-radius:4px; transition:all 0.15s; line-height:1.5;
+}
+.choice-btn-sm:hover { border-color:#555; color:#e8e8e0; }
+.choice-btn-sm.locked { border-color:#7fff00; color:#7fff00; background:rgba(127,255,0,0.06); cursor:default; }
+.choice-btn-sm .cpfx { color:#555; margin-right:6px; }
+
+.outcome-sm { display:flex; flex-direction:column; gap:0.5rem; }
+.outcome-tag-sm {
+  display:inline-block; padding:3px 10px; border-radius:3px; font-size:0.7rem; letter-spacing:2px; text-transform:uppercase;
+}
+.outcome-tag-sm.good { background:rgba(127,255,0,0.1); border:1px solid rgba(127,255,0,0.3); color:#7fff00; }
+.outcome-tag-sm.bad { background:rgba(204,0,0,0.1); border:1px solid rgba(204,0,0,0.3); color:#cc0000; }
+.outcome-tag-sm.neutral { background:rgba(255,165,0,0.1); border:1px solid rgba(255,165,0,0.3); color:#ffa500; }
+
+.outcome-title-sm { font-family:'Creepster',cursive; font-size:1.3rem; }
+.outcome-title-sm.good { color:#7fff00; }
+.outcome-title-sm.bad { color:#cc0000; }
+.outcome-title-sm.neutral { color:#ffa500; }
+
+.outcome-text-sm { font-size:0.85rem; line-height:1.8; color:#c8c8bc; }
+.consequence-sm { font-size:0.8rem; color:#888; padding-left:0.5rem; border-left:2px solid #2a2a2a; }
+.consequence-sm.loss { color:#cc0000; border-color:rgba(204,0,0,0.3); }
+.consequence-sm.gain { color:#7fff00; border-color:rgba(127,255,0,0.3); }
+
+.dice-sm { display:flex; align-items:center; gap:0.75rem; padding:0.5rem; background:rgba(0,0,0,0.4); border-radius:4px; border:1px solid #2a2a2a; }
+.dice-val { font-family:'Creepster',cursive; font-size:2.5rem; color:#7fff00; min-width:40px; }
+.dice-val.rolling { animation:roll 0.4s ease-out; }
+@keyframes roll { 0%{transform:rotate(0)scale(1)} 30%{transform:rotate(15deg)scale(1.2)} 70%{transform:rotate(-8deg)scale(0.9)} 100%{transform:rotate(0)scale(1)} }
+.dice-result-sm { font-size:0.8rem; color:#888; flex:1; line-height:1.6; display:none; }
+
+.pane-final {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; gap:0.75rem; padding:1rem; height:100%;
+}
+.pane-final-emoji { font-size:3rem; }
+.pane-final-title { font-family:'Creepster',cursive; font-size:1.8rem; }
+.pane-final-title.survived { color:#7fff00; }
+.pane-final-title.died { color:#cc0000; }
+.pane-final-text { font-size:0.8rem; color:#888; line-height:1.7; max-width:200px; }
+.pane-score { font-family:'Creepster',cursive; font-size:1.5rem; color:#ffa500; }
+
+/* WAITING INDICATOR */
+.waiting-indicator { font-size:0.75rem; color:#555; letter-spacing:2px; text-align:center; padding:0.5rem; animation:blink 1.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* SUBMIT BAR */
+.submit-bar {
+  background:rgba(0,0,0,0.95); border-top:1px solid #2a2a2a;
+  padding:0.6rem 1.5rem;
+  display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+  flex-shrink:0;
+}
+.submit-status { font-size:0.8rem; color:#555; letter-spacing:1px; }
+.submit-status span { color:#7fff00; }
+
+/* SCORE SCREEN */
+#score-screen {
+  position:relative; z-index:2; display:none;
+  min-height:100vh; flex-direction:column; align-items:center; justify-content:center;
+  gap:2rem; padding:2rem; text-align:center;
+}
+.score-title { font-family:'Creepster',cursive; font-size:clamp(2rem,5vw,4rem); color:#7fff00; }
+.score-grid { display:flex; gap:1.5rem; flex-wrap:wrap; justify-content:center; }
+.score-card {
+  background:rgba(0,0,0,0.5); border:1px solid #2a2a2a; border-radius:8px;
+  padding:1.25rem 1.5rem; min-width:160px; text-align:center;
+  display:flex; flex-direction:column; gap:0.5rem;
+}
+.score-card.winner { border-color:#7fff00; }
+.score-card-name { font-family:'Creepster',cursive; font-size:1.4rem; color:#cc0000; }
+.score-card-pts { font-family:'Creepster',cursive; font-size:2.5rem; color:#7fff00; }
+.score-card-pts.dead { color:#555; }
+.score-card-detail { font-size:0.65rem; color:#555; line-height:1.8; }
+
+/* BUTTONS */
+.btn {
+  background:transparent; border:1px solid #444; color:#e8e8e0;
+  padding:0.7rem 1.5rem; font-family:'Share Tech Mono',monospace; font-size:0.8rem;
+  letter-spacing:2px; text-transform:uppercase; cursor:pointer; border-radius:4px; transition:all 0.2s;
+}
+.btn:hover { border-color:#7fff00; color:#7fff00; }
+.btn-primary { border-color:#7fff00; color:#7fff00; }
+.btn-primary:hover { background:rgba(127,255,0,0.1); }
+.btn:disabled { border-color:#333; color:#444; cursor:default; }
+.btn:disabled:hover { border-color:#333; color:#444; background:transparent; }
+
+.fade-in { animation:fadeIn 0.3s ease-out; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="scanlines"></div>
+
+<!-- LOBBY -->
+<div id="lobby">
+  <div class="blood-divider"></div>
+  <div class="game-title">Zombie<br>Apocalypse</div>
+  <div class="game-subtitle">Survival Game</div>
+  <div class="blood-divider"></div>
+  <p style="color:#666;font-size:0.85rem;line-height:1.8;">How many teams are playing?</p>
+  <div class="team-count-grid" id="count-btns"></div>
+  <div style="display:flex;align-items:center;gap:1rem;margin-top:0.5rem;">
+    <label style="font-size:0.75rem;color:#555;letter-spacing:2px;cursor:pointer;display:flex;align-items:center;gap:8px;">
+      <input type="checkbox" id="sticky-ball-toggle" style="width:16px;height:16px;accent-color:#7fff00;cursor:pointer;">
+      Sticky Ball Mode
+    </label>
+  </div>
+  <button class="btn btn-primary" id="lobby-btn" onclick="startSetup()" disabled>[ Begin Setup ] ></button>
+</div>
+
+<!-- SETUP PHASE -->
+<div id="setup-phase">
+  <div class="setup-header">
+    <div>
+      <div class="setup-step-label" id="setup-step-label">Step 1 of 3</div>
+      <div class="setup-step-title" id="setup-step-title">Name Your Teams</div>
+    </div>
+    <div style="display:flex;gap:0.5rem;align-items:center;">
+      <div class="setup-step-label" id="setup-instruction" style="max-width:300px;text-align:right;"></div>
+    </div>
+  </div>
+  <div class="team-setup-grid" id="team-setup-grid" style="flex:1;overflow:auto;"></div>
+  <div class="setup-footer">
+    <div class="setup-step-label" id="setup-validation-msg" style="color:#cc0000;"></div>
+    <button class="btn btn-primary" id="setup-next-btn" onclick="setupNext()">[ Next ] ></button>
+  </div>
+</div>
+
+<!-- GAME PHASE -->
+<div id="game-phase">
+  <div class="game-header">
+    <div class="game-header-title">Zombie Apocalypse</div>
+    <div class="game-progress" id="game-progress"></div>
+  </div>
+  <div id="scene-panel">
+    <div id="scene-panel-emoji"></div>
+    <div id="scene-panel-body">
+      <div id="scene-panel-title"></div>
+      <div id="scene-panel-text"></div>
+      <div id="scene-panel-decision"></div>
+    </div>
+  </div>
+  <div class="panes-wrapper">
+    <div class="panes-container" id="panes-container"></div>
+    <div class="submit-bar" id="submit-bar">
+      <div class="submit-status">Teams selected: <span id="locked-count">0</span> / <span id="total-teams">0</span></div>
+      <button class="btn btn-primary" id="reveal-btn" onclick="revealAll()" disabled>[ Reveal Outcomes ] ></button>
+    </div>
+  </div>
+</div>
+
+<!-- DARTBOARD OVERLAY -->
+<div id="dartboard-overlay" style="display:none;position:fixed;inset:0;z-index:100;background:#0a0a0a;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;">
+  <div style="font-family:'Creepster',cursive;font-size:1.8rem;color:#7fff00;letter-spacing:2px;" id="dartboard-team-label"></div>
+  <div style="font-size:0.8rem;color:#555;letter-spacing:2px;">Throw the ball -- click where it lands</div>
+  <svg id="dartboard-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="width:min(70vw,70vh);height:min(70vw,70vh);cursor:crosshair;"></svg>
+  <button class="btn" onclick="closeDartboard()" style="font-size:0.75rem;">[ Cancel ]</button>
+</div>
+
+<!-- SCORE SCREEN -->
+<div id="score-screen">
+  <div class="score-title">Final Results</div>
+  <div class="score-grid" id="score-grid"></div>
+  <button class="btn btn-primary" onclick="resetAll()">[ Play Again ]</button>
+</div>
+
+<script>
+const ITEMS = [
+  {id:'axe',name:'Axe',emoji:'🪓',type:'weapon'},
+  {id:'fuel',name:'Fuel',emoji:'⛽',type:'supply'},
+  {id:'firstaid',name:'First Aid',emoji:'🩺',type:'medical'},
+  {id:'gun',name:'Gun',emoji:'🔫',type:'weapon'},
+  {id:'rope',name:'Rope',emoji:'🪢',type:'tool'},
+  {id:'cannedfood',name:'Canned Food',emoji:'🥫',type:'food'},
+  {id:'matches',name:'Matches',emoji:'🔥',type:'tool'},
+  {id:'waterbottle',name:'Water',emoji:'💧',type:'supply'},
+  {id:'knife',name:'Knife',emoji:'🔪',type:'weapon'},
+  {id:'lighter',name:'Lighter',emoji:'🪔',type:'tool'},
+];
+
+const MEMBERS = [
+  {id:'farmer',name:'Farmer',emoji:'👨‍🌾'},
+  {id:'teacher',name:'Teacher',emoji:'👩‍🏫'},
+  {id:'police',name:'Police Officer',emoji:'👮'},
+  {id:'engineer',name:'Engineer',emoji:'👷'},
+  {id:'doctor',name:'Doctor',emoji:'👨‍⚕️'},
+  {id:'pilot',name:'Pilot',emoji:'✈️'},
+  {id:'chef',name:'Chef',emoji:'👨‍🍳'},
+  {id:'soldier',name:'Soldier',emoji:'🪖'},
+];
+
+const SCENES = [
+  {number:'Scene 1 of 5',title:'The Airport',image:'✈️',
+   text:'You escape the city and reach the airport. The zombies are right behind you. You find a small plane on the runway. You suspect an island nearby could be safe.',
+   decision:'Do you try to fly to the island?',
+   choices:[{text:'Yes -- try to fly to the island',action:'airport_try'},{text:'No -- keep moving on foot',action:'airport_skip'}]},
+  {number:'Scene 2 of 5',title:'The Farm',image:'🌾',
+   text:'The team finds an abandoned farm outside the city. There are fruit trees, vegetables, and animals. You need food to survive, so you split up to search the farm.',
+   decision:'Stand and fight or run for your lives?',
+   choices:[{text:'Fight with your weapons and team',action:'farm_fight'},{text:'Run: leave the food behind',action:'farm_run'}]},
+  {number:'Scene 3 of 5',title:'The River',image:'🌊',
+   text:'You reach a wide river. The bridge is destroyed. On the other side you can see a town with high walls and lights -- other survivors. The current is strong and the water is cold.',
+   decision:'How do you cross?',
+   choices:'river_dynamic'},
+  {number:'Scene 4 of 5',title:'The Shelter',image:'🏚️',
+   text:'You reach the walled town. Inside, you find an old hospital to shelter in for the night. One of your team members was hurt during the journey. They need medical attention before tomorrow.',
+   decision:'shelter_dynamic',
+   choices:'shelter_dynamic'},
+  {number:'Scene 5 of 5',title:'The Final Stand',image:'🧟',
+   text:'At dawn, you notice thousands of zombies approaching in a massive horde. They will surely breach the walls. You see a boat in the distance that looks like it is in good shape. Do you hide and hope the horde does not find you, or fight your way to the boat now?',
+   decision:'Fight or hide?',
+   choices:[{text:'Fight through to the boat',action:'final_fight'},{text:'Hide and wait for them to pass',action:'final_hide'}]},
+];
+
+// ---- GLOBAL STATE ----
+let numTeams = 0;
+let setupStep = 0; // 0=names, 1=items, 2=members
+let teams = []; // array of team state objects
+let currentScene = 0;
+let allDone = false;
+
+function makeTeamState(teamIndex) {
+  return {
+    index: teamIndex,
+    teamName: `Team ${teamIndex+1}`,
+    selectedItems: [],
+    selectedMembers: [],
+    memberNames: {},
+    lostItems: [],
+    lostMembers: [],
+    weakened: false,
+    finished: false,
+    survived: null,
+    escapedByPlane: false,
+    settledOnFarm: false,
+    farmAttackStory: null,
+    pendingAction: null,
+    pendingOutcome: null,
+    diceRolled: false,
+    diceValue: null,
+    phase: 'choosing', // choosing | outcome | done
+  };
+}
+
+// ---- STICKY BALL MODE ----
+let stickyBallMode = false;
+let dartboardCallback = null;
+
+function initDartboard() {
+  const svg = document.getElementById('dartboard-svg');
+  if(!svg) return;
+  svg.innerHTML = '';
+  const cx = 200, cy = 200;
+  const NUM_WEDGES = 8;
+  const angleStep = (2 * Math.PI) / NUM_WEDGES;
+
+  // Rings: [outerRadius, innerRadius, scoreA, scoreB, colorA, colorB]
+  const rings = [
+    [190, 130, 1, 1, '#3a0808', '#2a0606'],   // Miss ring -- all 1s
+    [130, 70,  2, 3, '#5a1a00', '#3a2a00'],   // Outer ring -- alternates 2/3
+    [70,  30,  4, 5, '#1a4a00', '#0a3a00'],   // Inner ring -- alternates 4/5
+  ];
+
+  // Helper: SVG arc path for a wedge segment
+  function wedgePath(cx, cy, r1, r2, startAngle, endAngle) {
+    const x1 = cx + r2 * Math.cos(startAngle);
+    const y1 = cy + r2 * Math.sin(startAngle);
+    const x2 = cx + r1 * Math.cos(startAngle);
+    const y2 = cy + r1 * Math.sin(startAngle);
+    const x3 = cx + r1 * Math.cos(endAngle);
+    const y3 = cy + r1 * Math.sin(endAngle);
+    const x4 = cx + r2 * Math.cos(endAngle);
+    const y4 = cy + r2 * Math.sin(endAngle);
+    const largeArc = endAngle - startAngle > Math.PI ? 1 : 0;
+    return `M ${x1} ${y1} L ${x2} ${y2} A ${r1} ${r1} 0 ${largeArc} 1 ${x3} ${y3} L ${x4} ${y4} A ${r2} ${r2} 0 ${largeArc} 0 ${x1} ${y1} Z`;
+  }
+
+  // Draw wedge rings
+  rings.forEach(([r1, r2, scoreA, scoreB, colorA, colorB]) => {
+    for(let w = 0; w < NUM_WEDGES; w++) {
+      const startAngle = w * angleStep - Math.PI / 2;
+      const endAngle = (w + 1) * angleStep - Math.PI / 2;
+      const score = w % 2 === 0 ? scoreA : scoreB;
+      const color = w % 2 === 0 ? colorA : colorB;
+
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', wedgePath(cx, cy, r1, r2, startAngle, endAngle));
+      path.setAttribute('fill', color);
+      path.setAttribute('stroke', '#0a0a0a');
+      path.setAttribute('stroke-width', '1.5');
+      path.style.cursor = 'pointer';
+      path.addEventListener('click', (e) => { e.stopPropagation(); dartboardHit(score); });
+      svg.appendChild(path);
+
+      // Score label in wedge
+      const midAngle = (startAngle + endAngle) / 2;
+      const midR = (r1 + r2) / 2;
+      const lx = cx + midR * Math.cos(midAngle);
+      const ly = cy + midR * Math.sin(midAngle);
+      const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      label.setAttribute('x', lx); label.setAttribute('y', ly + 5);
+      label.setAttribute('text-anchor', 'middle');
+      label.setAttribute('fill', 'rgba(255,255,255,0.7)');
+      label.setAttribute('font-size', r1 - r2 > 60 ? '16' : '13');
+      label.setAttribute('font-family', 'Creepster, cursive');
+      label.style.pointerEvents = 'none';
+      label.textContent = score;
+      svg.appendChild(label);
+    }
+  });
+
+  // Bullseye -- single circle, score 6
+  const bull = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  bull.setAttribute('cx', cx); bull.setAttribute('cy', cy); bull.setAttribute('r', 30);
+  bull.setAttribute('fill', '#1a8010'); bull.setAttribute('stroke', '#2aaa10'); bull.setAttribute('stroke-width', '2');
+  bull.style.cursor = 'pointer';
+  bull.addEventListener('click', (e) => { e.stopPropagation(); dartboardHit(6); });
+  svg.appendChild(bull);
+
+  const bullLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  bullLabel.setAttribute('x', cx); bullLabel.setAttribute('y', cy + 8);
+  bullLabel.setAttribute('text-anchor', 'middle');
+  bullLabel.setAttribute('fill', '#7fff00');
+  bullLabel.setAttribute('font-size', '22'); bullLabel.setAttribute('font-family', 'Creepster, cursive');
+  bullLabel.style.pointerEvents = 'none'; bullLabel.textContent = '6';
+  svg.appendChild(bullLabel);
+
+  // Wedge divider lines from center to edge
+  for(let w = 0; w < NUM_WEDGES; w++) {
+    const angle = w * angleStep - Math.PI / 2;
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', cx); line.setAttribute('y1', cy);
+    line.setAttribute('x2', cx + 190 * Math.cos(angle));
+    line.setAttribute('y2', cy + 190 * Math.sin(angle));
+    line.setAttribute('stroke', '#0a0a0a'); line.setAttribute('stroke-width', '2');
+    line.style.pointerEvents = 'none';
+    svg.appendChild(line);
+  }
+}
+
+function showDartboard(ti) {
+  const t = teams[ti];
+  if(t.diceRolled) return;
+  const btn = document.getElementById(`roll-btn-${ti}`);
+  if(btn) btn.disabled = true;
+  document.getElementById('dartboard-team-label').textContent = t.teamName + ': Throw the sticky ball! Aim for the bullseye!';
+  document.getElementById('dartboard-overlay').style.display = 'flex';
+  dartboardCallback = (val) => processDartboardResult(ti, val);
+}
+
+function dartboardHit(score) {
+  const labels = {1:'Miss!', 2:'Off target', 3:'Close!', 4:'Nearly there', 5:'Good hit!', 6:'Bullseye!'};
+  const overlay = document.getElementById('dartboard-overlay');
+  const flash = document.createElement('div');
+  flash.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,0.75);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;pointer-events:none;';
+  flash.innerHTML = `<div style="font-family:'Creepster',cursive;font-size:6rem;color:#7fff00;line-height:1;">${score}</div><div style="font-family:'Share Tech Mono',monospace;font-size:1rem;color:#888;letter-spacing:3px;text-transform:uppercase;">${labels[score]||''}</div>`;
+  overlay.appendChild(flash);
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    overlay.removeChild(flash);
+    if(dartboardCallback) { dartboardCallback(score); dartboardCallback = null; }
+  }, 900);
+}
+
+function closeDartboard() {
+  document.getElementById('dartboard-overlay').style.display = 'none';
+  dartboardCallback = null;
+}
+
+function processDartboardResult(ti, val) {
+  const t = teams[ti];
+  t.diceRolled = true;
+  t.diceValue = val;
+  const display = document.getElementById(`dval-${ti}`);
+  if(display) { display.textContent = val; }
+  const {diceConfig, nextFn} = t.pendingOutcome;
+  const result = diceConfig(val, t);
+  const resEl = document.getElementById(`dres-${ti}`);
+  if(resEl) { resEl.textContent = result.text; resEl.style.display = 'block'; }
+  const cons = document.getElementById(`pcons-${ti}`);
+  if(cons) result.consequences.forEach(c => {
+    const d = document.createElement('div');
+    d.className = `consequence-sm ${c.type||''}`;
+    d.textContent = c.text;
+    cons.appendChild(d);
+  });
+  updatePaneStatus(ti);
+  const resolved = result.nextOverride !== undefined ? result.nextOverride : (typeof nextFn === 'function' ? nextFn(val, t) : nextFn);
+  t.pendingOutcome.resolvedNext = resolved;
+  markTeamOutcomeDone(ti);
+}
+
+// ---- LOBBY ----
+function initLobby() {
+  const cb = document.getElementById('count-btns');
+  cb.innerHTML = '';
+  for(let i=1;i<=5;i++) {
+    const b = document.createElement('button');
+    b.className = 'count-btn';
+    b.textContent = i;
+    b.dataset.n = i;
+    b.onclick = () => {
+      document.querySelectorAll('.count-btn').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      numTeams = i;
+      document.getElementById('lobby-btn').disabled = false;
+    };
+    cb.appendChild(b);
+  }
+}
+
+function startSetup() {
+  stickyBallMode = document.getElementById('sticky-ball-toggle').checked;
+  teams = [];
+  for(let i=0;i<numTeams;i++) teams.push(makeTeamState(i));
+  setupStep = 0;
+  document.getElementById('lobby').style.display = 'none';
+  document.getElementById('setup-phase').style.display = 'flex';
+  renderSetupStep();
+}
+
+// ---- SETUP ----
+function renderSetupStep() {
+  const grid = document.getElementById('team-setup-grid');
+  grid.innerHTML = '';
+  grid.style.gridTemplateColumns = `repeat(${numTeams},1fr)`;
+  document.getElementById('setup-validation-msg').textContent = '';
+
+  if(setupStep === 0) {
+    document.getElementById('setup-step-label').textContent = 'Step 1 of 2';
+    document.getElementById('setup-step-title').textContent = 'Name Your Teams';
+    document.getElementById('setup-instruction').textContent = 'Enter a name for each team.';
+    teams.forEach((t,i) => {
+      const pane = document.createElement('div');
+      pane.className = 'team-setup-pane';
+      pane.innerHTML = `
+        <div class="pane-team-label">Team ${i+1}</div>
+        <input class="pane-team-name-input" id="tname-${i}" type="text" placeholder="Team name..." maxlength="20" value="${t.teamName}" oninput="teams[${i}].teamName=this.value||'Team ${i+1}'">
+      `;
+      grid.appendChild(pane);
+    });
+
+  } else if(setupStep === 1) {
+    document.getElementById('setup-step-label').textContent = 'Step 2 of 2';
+    document.getElementById('setup-step-title').textContent = 'Choose Your Kit and Team';
+    document.getElementById('setup-instruction').textContent = 'Each team chooses 4 items and 4 members.';
+    teams.forEach((t,i) => {
+      const pane = document.createElement('div');
+      pane.className = 'team-setup-pane';
+      let html = `<div class="pane-team-label">${t.teamName}</div>`;
+
+      html += `<div class="selection-subtitle">Survival Kit (choose 4)</div>`;
+      html += `<div class="item-grid" id="igrid-${i}">`;
+      ITEMS.forEach(item => {
+        const sel = t.selectedItems.includes(item.id) ? ' selected-item' : '';
+        html += `<div class="item-card${sel}" id="icard-${i}-${item.id}" onclick="toggleSetupItem(${i},'${item.id}')">
+          <span class="ic-emoji">${item.emoji}</span>
+          <span class="ic-name">${item.name}</span>
+        </div>`;
+      });
+      html += `</div><div class="sel-count">Items: <span id="icount-${i}">${t.selectedItems.length}</span> / 4</div>`;
+
+      html += `<div class="selection-subtitle" style="margin-top:0.5rem;">Team Members (choose 4)</div>`;
+      html += `<div class="item-grid" id="mgrid-${i}">`;
+      MEMBERS.forEach(m => {
+        const sel = t.selectedMembers.includes(m.id) ? ' selected-member' : '';
+        html += `<div class="item-card${sel}" id="mcard-${i}-${m.id}" onclick="toggleSetupMember(${i},'${m.id}')">
+          <span class="ic-emoji">${m.emoji}</span>
+          <span class="ic-name">${m.name}</span>
+        </div>`;
+      });
+      html += `</div>
+        <div class="sel-count">Members: <span id="mcount-${i}">${t.selectedMembers.length}</span> / 4</div>
+        <div class="member-names-list" id="mnames-${i}"></div>`;
+
+      pane.innerHTML = html;
+      grid.appendChild(pane);
+      renderMemberNames(i);
+    });
+  }
+}
+
+function toggleSetupItem(ti, id) {
+  const t = teams[ti];
+  if(t.selectedItems.includes(id)) {
+    t.selectedItems = t.selectedItems.filter(x=>x!==id);
+    document.getElementById(`icard-${ti}-${id}`).classList.remove('selected-item');
+  } else if(t.selectedItems.length < 4) {
+    t.selectedItems.push(id);
+    document.getElementById(`icard-${ti}-${id}`).classList.add('selected-item');
+  }
+  document.getElementById(`icount-${ti}`).textContent = t.selectedItems.length;
+}
+
+function toggleSetupMember(ti, id) {
+  const t = teams[ti];
+  if(t.selectedMembers.includes(id)) {
+    t.selectedMembers = t.selectedMembers.filter(x=>x!==id);
+    delete t.memberNames[id];
+    document.getElementById(`mcard-${ti}-${id}`).classList.remove('selected-member');
+  } else if(t.selectedMembers.length < 4) {
+    t.selectedMembers.push(id);
+    const m = MEMBERS.find(m=>m.id===id);
+    t.memberNames[id] = m.name;
+    document.getElementById(`mcard-${ti}-${id}`).classList.add('selected-member');
+  }
+  document.getElementById(`mcount-${ti}`).textContent = t.selectedMembers.length;
+  renderMemberNames(ti);
+}
+
+function renderMemberNames(ti) {
+  const t = teams[ti];
+  const container = document.getElementById(`mnames-${ti}`);
+  if(!container) return;
+  container.innerHTML = '';
+  t.selectedMembers.forEach(id => {
+    const m = MEMBERS.find(m=>m.id===id);
+    const row = document.createElement('div');
+    row.className = 'member-name-row';
+    row.innerHTML = `<span>${m.emoji}</span>
+      <input type="text" value="${t.memberNames[id]||m.name}" maxlength="15"
+        oninput="teams[${ti}].memberNames['${id}']=this.value||'${m.name}'"
+        placeholder="${m.name}">`;
+    container.appendChild(row);
+  });
+}
+
+function setupNext() {
+  const msg = document.getElementById('setup-validation-msg');
+  if(setupStep === 0) {
+    setupStep = 1;
+    renderSetupStep();
+  } else if(setupStep === 1) {
+    const badItems = teams.find(t=>t.selectedItems.length !== 4);
+    if(badItems) { msg.textContent = `${badItems.teamName} needs exactly 4 items.`; return; }
+    const badMembers = teams.find(t=>t.selectedMembers.length !== 4);
+    if(badMembers) { msg.textContent = `${badMembers.teamName} needs exactly 4 team members.`; return; }
+    startGame();
+  }
+}
+
+// ---- GAME ----
+function startGame() {
+  currentScene = 0;
+  document.getElementById('setup-phase').style.display = 'none';
+  document.getElementById('game-phase').style.display = 'flex';
+  document.getElementById('total-teams').textContent = numTeams;
+  document.getElementById('submit-bar').style.display = numTeams === 1 ? 'none' : 'flex';
+  if(stickyBallMode) initDartboard();
+  buildProgressBar();
+  buildPanes();
+  renderScene();
+}
+
+function buildProgressBar() {
+  const pb = document.getElementById('game-progress');
+  pb.innerHTML = '';
+  for(let i=0;i<5;i++) {
+    const d = document.createElement('div');
+    d.className = 'prog-dot';
+    d.id = `pdot-${i}`;
+    pb.appendChild(d);
+  }
+}
+
+function updateProgress() {
+  for(let i=0;i<5;i++) {
+    const d = document.getElementById(`pdot-${i}`);
+    if(d) {
+      if(i < currentScene) d.className = 'prog-dot done';
+      else if(i === currentScene) d.className = 'prog-dot current';
+      else d.className = 'prog-dot';
+    }
+  }
+}
+
+function buildPanes() {
+  const pc = document.getElementById('panes-container');
+  pc.innerHTML = '';
+  pc.style.gridTemplateColumns = `repeat(${numTeams},1fr)`;
+  teams.forEach((t,i) => {
+    const pane = document.createElement('div');
+    pane.className = 'game-pane';
+    pane.id = `pane-${i}`;
+    pane.innerHTML = `
+      <div class="pane-header">
+        <div class="pane-team-title" id="ptitle-${i}">${t.teamName}</div>
+        <div class="pane-status" id="pstatus-${i}"></div>
+      </div>
+      <div class="pane-body" id="pbody-${i}"></div>
+    `;
+    pc.appendChild(pane);
+  });
+  teams.forEach((_,i) => updatePaneStatus(i));
+}
+
+function updatePaneStatus(ti) {
+  const t = teams[ti];
+  const el = document.getElementById(`pstatus-${ti}`);
+  if(!el) return;
+  el.innerHTML = '';
+  ITEMS.filter(item=>t.selectedItems.includes(item.id)).forEach(item => {
+    const s = document.createElement('span');
+    s.className = 'ptag item' + (t.lostItems.includes(item.id) ? ' lost' : '');
+    s.textContent = item.emoji + ' ' + item.name;
+    el.appendChild(s);
+  });
+  MEMBERS.filter(m=>t.selectedMembers.includes(m.id)).forEach(m => {
+    const s = document.createElement('span');
+    s.className = 'ptag member' + (t.lostMembers.includes(m.id) ? ' lost' : '');
+    s.textContent = m.emoji + ' ' + tGetMemberName(t, m.id);
+    el.appendChild(s);
+  });
+}
+
+function renderScene() {
+  updateProgress();
+  const scene = SCENES[currentScene];
+  document.getElementById('locked-count').textContent = 0;
+  document.getElementById('reveal-btn').disabled = true;
+  document.getElementById('reveal-btn').textContent = '[ Reveal Outcomes ] >';
+
+  // Populate shared scene panel
+  document.getElementById('scene-panel-emoji').textContent = scene.image;
+  document.getElementById('scene-panel-title').textContent = scene.title;
+  document.getElementById('scene-panel-text').innerHTML = scene.text;
+
+  teams.forEach((t, ti) => {
+    if(t.finished) return;
+    t.phase = 'choosing';
+    t.selectedChoice = null;
+    t.pendingAction = null;
+    t.diceRolled = false;
+    t.diceValue = null;
+    t.pendingOutcome = null;
+
+    const choices = getChoices(scene, t);
+    const decision = getDecision(scene, t);
+    document.getElementById('scene-panel-decision').textContent = decision;
+
+    if(currentScene === 1) {
+      t.farmAttackStory = tFarmAttackStory(t);
+    }
+    const farmNarrative = currentScene === 1 ? `<div class="scene-text-sm" style="margin-bottom:0.5rem;">${t.farmAttackStory}</div>` : '';
+    let html = farmNarrative + `<div class="choice-btns" id="cbts-${ti}">`;
+    choices.forEach((c,ci) => {
+      html += `<button class="choice-btn-sm" id="cbtn-${ti}-${ci}" onclick="lockChoice(${ti},${ci},'${c.action}')">
+        <span class="cpfx">${String.fromCharCode(65+ci)}.</span>${c.text}
+      </button>`;
+    });
+    html += `</div>`;
+    document.getElementById(`pbody-${ti}`).innerHTML = html;
+  });
+}
+
+function getChoices(scene, t) {
+  if(scene.choices === 'river_dynamic') {
+    const choices = [];
+    if(tHas(t,'rope')) choices.push({text:'Use your rope to cross',action:'river_rope'});
+    choices.push({text:'Swim across',action:'river_swim'});
+    return choices;
+  }
+  if(scene.choices === 'shelter_dynamic') {
+    const solo = tTeamAlive(t) === 1;
+    return [
+      {text: solo ? 'Try to treat your own injury' : 'Treat the injury now', action:'shelter_treat'},
+      {text: solo ? 'Rest and hope for the best' : 'Rest and hope they are okay', action:'shelter_rest'},
+    ];
+  }
+  return scene.choices;
+}
+
+function getDecision(scene, t) {
+  if(scene.decision === 'shelter_dynamic') {
+    return tTeamAlive(t) === 1 ? 'You are alone and injured. What do you do?' : 'Can you treat them?';
+  }
+  return scene.decision;
+}
+
+function lockChoice(ti, ci, action) {
+  const t = teams[ti];
+  if(t.phase !== 'choosing' && t.phase !== 'selected') return;
+
+  // If single team, process immediately
+  if(numTeams === 1) {
+    t.phase = 'locked';
+    t.pendingAction = action;
+    processChoice(ti, action);
+    return;
+  }
+
+  // Mark selection -- allow changing freely
+  t.selectedChoice = {ci, action};
+  t.phase = 'selected';
+  t.pendingAction = action;
+
+  const btns = document.getElementById(`cbts-${ti}`);
+  if(btns) btns.querySelectorAll('.choice-btn-sm').forEach((b,i) => {
+    b.classList.remove('locked');
+    if(i===ci) b.classList.add('locked');
+  });
+
+  // Check if all active teams have selected
+  const active = teams.filter(t=>!t.finished);
+  const allSelected = active.every(t=>t.phase==='selected'||t.phase==='locked');
+  const selectedCount = active.filter(t=>t.phase==='selected'||t.phase==='locked').length;
+  document.getElementById('locked-count').textContent = selectedCount;
+  document.getElementById('reveal-btn').disabled = !allSelected;
+}
+
+function revealAll() {
+  document.getElementById('reveal-btn').disabled = true;
+  document.getElementById('reveal-btn').textContent = '[ Reveal Outcomes ] >';
+  document.getElementById('locked-count').textContent = 0;
+
+  const active = teams.filter(t=>!t.finished);
+
+  if(active.every(t=>t.phase==='outcome_done')) {
+    active.forEach(t => advanceTeam(t.index));
+  } else {
+    // Lock all selected teams and process
+    active.forEach(t => { if(t.phase==='selected') t.phase='locked'; });
+    teams.forEach((t,ti) => {
+      if(t.finished || t.phase !== 'locked') return;
+      processChoice(ti, t.pendingAction);
+    });
+  }
+}
+
+// ---- TEAM-SCOPED HELPERS ----
+function tHas(t, item) { return t.selectedItems.includes(item) && !t.lostItems.includes(item); }
+function tHasMember(t, m) { return t.selectedMembers.includes(m) && !t.lostMembers.includes(m); }
+function tLoseItem(t, item) { if(!t.lostItems.includes(item)) t.lostItems.push(item); }
+function tLoseMember(t, m) { if(!t.lostMembers.includes(m)) t.lostMembers.push(m); }
+function tTeamAlive(t) { return MEMBERS.filter(m=>tHasMember(t,m.id)).length; }
+function tIsDead(t) { return tTeamAlive(t) === 0; }
+function tGetMemberName(t, id) { return t.memberNames[id] || (MEMBERS.find(m=>m.id===id)||{}).name || id; }
+function tRef(t, id, cap) {
+  if(!id) return cap ? 'Someone' : 'someone';
+  const role = (MEMBERS.find(m=>m.id===id)||{}).name || id;
+  const name = t.memberNames[id] || role;
+  if(name === role) return (cap ? 'The ' : 'the ') + role.toLowerCase();
+  return name;
+}
+function tDisplayName(t, id) {
+  const role = (MEMBERS.find(m=>m.id===id)||{}).name || id;
+  const name = t.memberNames[id] || role;
+  return name === role ? name : `${name} (${role})`;
+}
+
+function tRandomVictim(t) {
+  const alive = t.selectedMembers.filter(m=>!t.lostMembers.includes(m));
+  if(!alive.length) return null;
+  return alive[Math.floor(Math.random()*alive.length)];
+}
+function tRandomWitness(t, excludeId) {
+  const others = t.selectedMembers.filter(m=>!t.lostMembers.includes(m)&&m!==excludeId);
+  if(!others.length) return null;
+  return others[Math.floor(Math.random()*others.length)];
+}
+
+function tDeathText(t, count) {
+  const dead = t.lostMembers.slice(-count).filter(Boolean);
+  if(!dead.length) return tIsDead(t) ? 'Everyone is gone.' : 'Someone has died.';
+  const names = dead.map(id => {
+    const role = (MEMBERS.find(m=>m.id===id)||{}).name || id;
+    const name = t.memberNames[id] || role;
+    return name === role ? 'The ' + name : name;
+  });
+  if(tIsDead(t)) return `${names.join(' and ')} ${count>1?'have':'has'} died. Everyone is gone.`;
+  return `${names.join(' and ')} ${count>1?'have':'has'} died`;
+}
+
+// ---- STORY FUNCTIONS ----
+const ROLE_ACTIVITIES = {
+  farmer: 'was walking the farm, checking if it could be a safe place to stay',
+  chef: 'was picking fruit from the trees',
+  soldier: 'was keeping watch on the perimeter',
+  police: 'was checking the fence line',
+  doctor: 'was trying to treat a sick cow',
+  engineer: 'was looking for tools and spare parts in the shed',
+  pilot: 'was searching the farmhouse for food and supplies',
+  teacher: 'was sitting in a field playing with a baby lamb, completely unaware of the danger',
+};
+
+function tFarmAttackStory(t) {
+  const alive = t.selectedMembers.filter(m=>!t.lostMembers.includes(m));
+  const shuffled = alive.slice().sort(()=>Math.random()-0.5);
+  const m1 = shuffled[0], m2 = shuffled[1] || shuffled[0];
+  const n1 = tRef(t, m1, true), n2 = tRef(t, m2, true);
+  const a1 = ROLE_ACTIVITIES[m1] || 'was searching the farm';
+  const a2 = m2 !== m1 ? (ROLE_ACTIVITIES[m2] || 'was nearby') : 'was also searching nearby';
+  return `${n1} ${a1} when they heard a scream. ${n2} ${a2} when a zombie grabbed their ankle from under the fence. Within seconds the whole farm is surrounded.`;
+}
+
+function tBittenStory(t, victimId) {
+  const v = tRef(t, victimId, true);
+  const wid = tRandomWitness(t, victimId);
+  const w = wid ? tRef(t, wid, false) : 'the group';
+  if(tHasMember(t,'soldier') && victimId !== 'soldier') {
+    return `${v} is bitten before ${tRef(t,'soldier',false)} can reach them. ${tRef(t,'soldier',false)} does what has to be done. Nobody speaks for a long time afterwards.`;
+  }
+  if(tHas(t,'axe')) {
+    return `${v} swings the axe but misses. The zombie takes them down. ${w} grabs the axe and runs.`;
+  }
+  return `${v} freezes when the first zombie grabs their arm. They fight back but it is too late. The bite is deep. By the time ${w} pulls the zombie off, ${v} is already turning. You have to leave them behind.`;
+}
+
+function tOverwhelmedStory1(t, victimId) {
+  const v = tRef(t, victimId, true);
+  const wid = tRandomWitness(t, victimId);
+  const w = wid ? tRef(t, wid, false) : 'the group';
+  return `The horde splits your group. ${v} is surrounded before anyone can help. ${w} screams their name but there is nothing to do. You run.`;
+}
+
+function tOverwhelmedStory2(t, v1id, v2id) {
+  return `The horde splits your group. ${tRef(t,v1id,false)} goes down first. ${tRef(t,v2id,false)} turns back to help. A mistake. You run with whoever is left.`;
+}
+
+function tRiverStory(t, victimId) {
+  const v = tRef(t, victimId, true);
+  const wid = tRandomWitness(t, victimId);
+  const w = wid ? tRef(t, wid, false) : 'the group';
+  return `${v} loses their grip halfway across. The current takes them fast. ${w} reaches out but cannot hold on. You watch them disappear downstream.`;
+}
+
+function tShelterStory(t, victimId) {
+  const v = tRef(t, victimId, true);
+  const wid = tRandomWitness(t, victimId);
+  const w = wid ? tRef(t, wid, false) : 'the team';
+  const variants = [
+    `In the middle of the night the team wakes up to ${v} screaming in pain from the bathroom. ${w} rushes to see if ${v} has been bitten. They have not, but the smell is horrible, and there is no water to flush the toilet.`,
+    `${v} was sleeping soundly when they suddenly started coughing and could not stop. By morning the fever had spread. ${w} tries to help but there is nothing to be done.`,
+    `${v} was keeping watch when they collapsed without a sound. ${w} found them on the floor an hour later. The infection had moved fast.`,
+  ];
+  return variants[Math.floor(Math.random()*variants.length)];
+}
+
+function tFinalLossStory(t, victimId) {
+  const v = tRef(t, victimId, true);
+  const wid = tRandomWitness(t, victimId);
+  const w = wid ? tRef(t, wid, false) : 'the group';
+  if(tHasMember(t,'soldier') && victimId !== 'soldier') {
+    return `${v} tells ${tRef(t,'soldier',false)} to go. They hold the horde back long enough for the rest of you to reach the boat. You don't look back.`;
+  }
+  return `${v} stumbles on the dock. The horde closes in before anyone can pull them back. ${w} has to be dragged onto the boat. You push off without them.`;
+}
+
+// ---- OUTCOME DISPLAY ----
+function showPaneOutcome(ti, t, tag, tagClass, title, text, consequences, nextFn, diceConfig) {
+  t.phase = 'outcome';
+  t.pendingOutcome = {nextFn, diceConfig};
+  const body = document.getElementById(`pbody-${ti}`);
+  let html = `<div class="outcome-sm fade-in">
+    <span class="outcome-tag-sm ${tagClass}">${tag}</span>
+    <div class="outcome-title-sm ${tagClass}">${title}</div>
+    <div class="outcome-text-sm">${text}</div>
+    <div id="pcons-${ti}">`;
+  consequences.forEach(c => {
+    html += `<div class="consequence-sm ${c.type||''}">${c.text}</div>`;
+  });
+  html += `</div>`;
+
+  if(diceConfig) {
+    const rollControl = stickyBallMode
+      ? `<button class="btn" id="roll-btn-${ti}" onclick="showDartboard(${ti})" style="font-size:0.65rem;padding:0.4rem 0.8rem;margin-top:4px;">[ Show Target ]</button>`
+      : `<button class="btn" id="roll-btn-${ti}" onclick="rollPaneDice(${ti})" style="font-size:0.65rem;padding:0.4rem 0.8rem;margin-top:4px;">[ Roll ]</button>`;
+    html += `<div class="dice-sm" id="dice-sm-${ti}">
+      <div class="dice-val" id="dval-${ti}">?</div>
+      <div>
+        <div class="dice-result-sm" id="dres-${ti}"></div>
+        ${rollControl}
+      </div>
+    </div>`;
+  }
+  html += `<div class="waiting-indicator" id="outcome-waiting-${ti}" style="display:none;">Ready for next scene...</div>`;
+  html += `</div>`;
+  body.innerHTML = html;
+  updatePaneStatus(ti);
+
+  if(!diceConfig) {
+    markTeamOutcomeDone(ti);
+  }
+}
+
+function rollPaneDice(ti) {
+  const t = teams[ti];
+  if(t.diceRolled) return;
+  t.diceRolled = true;
+  const rollBtn = document.getElementById(`roll-btn-${ti}`);
+  if(rollBtn) rollBtn.disabled = true;
+  const display = document.getElementById(`dval-${ti}`);
+  const val = Math.floor(Math.random() * 6) + 1;
+
+  let step = 0;
+  const frames = [1,4,2,6,3,5,1,4,val];
+  const iv = setInterval(() => {
+    display.textContent = frames[step];
+    step++;
+    if(step >= frames.length) {
+      clearInterval(iv);
+      display.classList.remove('rolling');
+      t.diceValue = val;
+      const {diceConfig, nextFn} = t.pendingOutcome;
+      const result = diceConfig(val, t);
+      const resEl = document.getElementById(`dres-${ti}`);
+      if(resEl) { resEl.textContent = result.text; resEl.style.display = 'block'; }
+      const cons = document.getElementById(`pcons-${ti}`);
+      if(cons) result.consequences.forEach(c => {
+        const d = document.createElement('div');
+        d.className = `consequence-sm ${c.type||''}`;
+        d.textContent = c.text;
+        cons.appendChild(d);
+      });
+      updatePaneStatus(ti);
+      const resolved = result.nextOverride !== undefined ? result.nextOverride : (typeof nextFn === 'function' ? nextFn(val, t) : nextFn);
+      t.pendingOutcome.resolvedNext = resolved;
+      markTeamOutcomeDone(ti);
+    }
+  }, 80);
+}
+
+function markTeamOutcomeDone(ti) {
+  const t = teams[ti];
+  t.phase = 'outcome_done';
+
+  if(numTeams === 1) {
+    // Show a Next Scene button so the player can read the outcome before advancing
+    const body = document.getElementById(`pbody-${ti}`);
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'btn btn-primary';
+    nextBtn.style.cssText = 'margin-top:0.75rem;font-size:0.75rem;padding:0.5rem 1rem;';
+    const {nextFn, resolvedNext} = t.pendingOutcome;
+    const resolved = resolvedNext !== undefined ? resolvedNext : (typeof nextFn === 'function' ? nextFn(t) : nextFn);
+    const isEnd = resolved === 'win' || resolved === 'lose' || tIsDead(t);
+    nextBtn.textContent = isEnd ? '[ See Results ] >' : '[ Next Scene ] >';
+    nextBtn.onclick = () => { nextBtn.disabled = true; advanceTeam(ti); };
+    if(body) body.appendChild(nextBtn);
+    return;
+  }
+
+  const w = document.getElementById(`outcome-waiting-${ti}`);
+  if(w) w.style.display = 'block';
+
+  const lockedCount = teams.filter(t=>t.phase==='locked'||t.phase==='outcome_done'||t.finished).length;
+  document.getElementById('locked-count').textContent = lockedCount;
+
+  const active = teams.filter(t=>!t.finished);
+  const allReady = active.every(t=>t.phase==='outcome_done');
+  if(allReady) {
+    document.getElementById('reveal-btn').disabled = false;
+    document.getElementById('reveal-btn').textContent = '[ Continue ] >';
+  }
+}
+
+function advanceTeam(ti) {
+  const t = teams[ti];
+  const {nextFn, resolvedNext} = t.pendingOutcome;
+  const resolved = resolvedNext !== undefined ? resolvedNext : (typeof nextFn === 'function' ? nextFn(t) : nextFn);
+  resolveTeamNext(ti, resolved);
+}
+
+function resolveTeamNext(ti, next) {
+  const t = teams[ti];
+  if(tIsDead(t)) { endTeam(ti, false); return; }
+  if(next === 'win') { endTeam(ti, true); return; }
+  if(next === 'lose') { endTeam(ti, false); return; }
+  if(typeof next === 'number') {
+    // check if all teams done with current scene
+    t.phase = 'scene_done';
+    checkAllSceneDone();
+    return;
+  }
+}
+
+function checkAllSceneDone() {
+  const active = teams.filter(t=>!t.finished);
+  const allDone = active.every(t=>t.phase==='scene_done'||t.finished);
+  if(allDone) {
+    currentScene++;
+    if(currentScene >= 5) return;
+    teams.forEach(t => { if(!t.finished) t.phase='choosing'; });
+    renderScene();
+    document.getElementById('locked-count').textContent = 0;
+    document.getElementById('reveal-btn').disabled = true;
+    document.getElementById('reveal-btn').textContent = '[ Reveal Outcomes ] >';
+  }
+}
+
+function endTeam(ti, survived) {
+  const t = teams[ti];
+  t.finished = true;
+  t.survived = survived;
+  t.phase = 'done';
+
+  const aliveMemberIds = MEMBERS.filter(m=>tHasMember(t,m.id)).map(m=>m.id);
+  const alive = aliveMemberIds.map(id=>tDisplayName(t,id));
+  const itemsLeft = ITEMS.filter(item=>tHas(t,item.id)).length;
+  const score = alive.length * 5 + itemsLeft * 2;
+  t.score = survived ? score : 0;
+
+  const body = document.getElementById(`pbody-${ti}`);
+  if(survived) {
+    const endEmoji = t.escapedByPlane ? '✈️' : t.settledOnFarm ? '🌾' : '🛥️';
+    const endTitle = t.settledOnFarm ? 'You Made It Home.' : 'Survived!';
+    const endText = t.settledOnFarm
+      ? (alive.length ? alive.join(', ') + ' settled the farm.' : 'You found a new home.')
+      : (alive.length ? alive.join(', ') + ' made it out alive.' : 'You barely survived.');
+    body.innerHTML = `<div class="pane-final fade-in">
+      <div class="pane-final-emoji">${endEmoji}</div>
+      <div class="pane-final-title survived">${endTitle}</div>
+      <div class="pane-final-text">${endText}</div>
+      <div class="pane-score">${score} pts</div>
+      <div class="score-card-detail" style="color:#555">${alive.length} survivors x 5 = ${alive.length*5}<br>${itemsLeft} supplies x 2 = ${itemsLeft*2}</div>
+    </div>`;
+  } else {
+    body.innerHTML = `<div class="pane-final fade-in">
+      <div class="pane-final-emoji">🧟</div>
+      <div class="pane-final-title died">Wiped Out.</div>
+      <div class="pane-final-text">${t.teamName} did not survive the zombie apocalypse.</div>
+      <div class="pane-score" style="color:#555">0 pts</div>
+    </div>`;
+  }
+  updatePaneStatus(ti);
+
+  // Check if all teams finished
+  if(teams.every(t=>t.finished)) {
+    setTimeout(showScoreScreen, 1500);
+  } else {
+    checkAllSceneDone();
+  }
+}
+
+function showScoreScreen() {
+  document.getElementById('game-phase').style.display = 'none';
+  document.getElementById('score-screen').style.display = 'flex';
+  const grid = document.getElementById('score-grid');
+  grid.innerHTML = '';
+  const maxScore = Math.max(...teams.map(t=>t.score||0));
+  teams.sort((a,b)=>(b.score||0)-(a.score||0)).forEach(t => {
+    const card = document.createElement('div');
+    card.className = 'score-card' + (t.score===maxScore && t.score>0 ? ' winner' : '');
+    const alive = MEMBERS.filter(m=>tHasMember(t,m.id)).map(m=>tDisplayName(t,m.id));
+    const itemsLeft = ITEMS.filter(item=>tHas(t,item.id)).length;
+    const endEmoji = t.escapedByPlane ? '✈️ ' : t.settledOnFarm ? '🌾 ' : '🛥️ ';
+    const survivedText = t.settledOnFarm ? alive.join(', ') + ' settled the farm' : alive.join(', ') + ' survived';
+    card.innerHTML = `
+      <div class="score-card-name">${t.teamName}</div>
+      <div class="score-card-pts ${t.survived?'':'dead'}">${t.survived ? endEmoji : ''}${t.score||0}</div>
+      <div class="score-card-detail">
+        ${t.survived ? survivedText : 'Did not survive'}<br>
+        ${t.survived ? `${alive.length} survivors x 5 = ${alive.length*5}<br>${itemsLeft} supplies x 2 = ${itemsLeft*2}` : ''}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ---- SCENE PROCESSORS ----
+function processChoice(ti, action) {
+  const t = teams[ti];
+  const handlers = {
+    airport_try: () => airportTry(ti, t),
+    airport_skip: () => airportSkip(ti, t),
+    farm_fight: () => farmFight(ti, t),
+    farm_run: () => farmRun(ti, t),
+    river_rope: () => riverRope(ti, t),
+    river_swim: () => riverSwim(ti, t),
+    shelter_treat: () => shelterTreat(ti, t),
+    shelter_rest: () => shelterRest(ti, t),
+    final_fight: () => finalFight(ti, t),
+    final_hide: () => finalHide(ti, t),
+  };
+  handlers[action]();
+}
+
+function OUT(ti, t, tag, cls, title, text, cons, next, dice) {
+  showPaneOutcome(ti, t, tag, cls, title, text, cons, next, dice);
+}
+
+function airportTry(ti, t) {
+  if(tHas(t,'fuel') && tHasMember(t,'pilot')) {
+    tLoseItem(t,'fuel');
+    OUT(ti,t,'rolling the dice','neutral','You Reach the Island',
+      `${tRef(t,'pilot',true)} takes the controls. You pour in the last of the fuel. The engine roars. <strong>You fly to the island, but as you land, you see movement in the trees.</strong> Roll to see if the island is safe.`,
+      [{text:'Fuel used',type:'loss'}],
+      1,
+      (val,t) => {
+        if(val <= 2) return {text:'Zombies. The island is not safe. You keep moving.', consequences:[{text:'The island is not safe',type:'loss'}], nextOverride:1};
+        t.escapedByPlane = true; return {text:'The island is clear. No zombies anywhere. You are safe.', consequences:[{text:'You are safe',type:'gain'}], nextOverride:'win'};
+      }
+    );
+  } else if(tHas(t,'fuel')) {
+    tLoseItem(t,'fuel');
+    OUT(ti,t,'disaster','bad','Crash Landing',
+      'The plane is accelerating down the runway when suddenly the engine explodes. The cockpit fills with smoke. The team crashes through the fence and skids into the grass. Roll to see who walks away.',
+      [{text:'Fuel used in attempt',type:'loss'}],
+      1,
+      (val,t) => {
+        if(val <= 2) {
+          const v = tRandomVictim(t); if(v) tLoseMember(t,v);
+          const v2 = tRandomVictim(t); if(v2) tLoseMember(t,v2);
+          if(tIsDead(t)) return {text:'Nobody walks away from the wreckage.',consequences:[{text:'Everyone is dead',type:'loss'}],nextOverride:'lose'};
+          return {text:v&&v2?tOverwhelmedStory2(t,v,v2):`${tRef(t,v,true)} does not walk away from the wreckage.`,consequences:[{text:tDeathText(t,v2?2:1),type:'loss'}]};
+        }
+        if(val <= 4) {
+          const v = tRandomVictim(t); if(v) tLoseMember(t,v);
+          if(tIsDead(t)) return {text:'Only one survives the crash, and the zombies get them before they can run.',consequences:[{text:'Everyone is dead',type:'loss'}],nextOverride:'lose'};
+          return {text:`${tRef(t,v,true)} does not walk away from the wreckage. The rest of you escape into the grass.`,consequences:[{text:tDeathText(t,1),type:'loss'}]};
+        }
+        return {text:'Somehow everyone crawls out of the wreckage alive. Shaken, but moving.',consequences:[{text:'Lucky escape',type:'gain'}]};
+      }
+    );
+  } else {
+    OUT(ti,t,'no fuel','neutral','Empty Tank',
+      'The fuel gauge reads zero. The plane is useless. You wasted time. <strong>The zombies are closer now. Roll to see what it cost you.</strong>',
+      [],
+      1,
+      (val,t) => {
+        if(val === 1) {
+          const v = tRandomVictim(t); if(v) tLoseMember(t,v);
+          const avail = t.selectedItems.filter(i=>!t.lostItems.includes(i));
+          const lost = avail[Math.floor(Math.random()*avail.length)];
+          if(lost) tLoseItem(t,lost);
+          const item = lost ? ITEMS.find(i=>i.id===lost) : null;
+          return {text:`The zombies catch ${tRef(t,v,false)} at the fence. In the panic, ${item?'your '+item.name+' is dropped and left behind':''}.`,consequences:[{text:tDeathText(t,1),type:'loss'}].concat(item?[{text:item.name+' lost',type:'loss'}]:[])};
+        }
+        if(val <= 3) {
+          const v = tRandomVictim(t); if(v) tLoseMember(t,v);
+          return {text:`The zombies are faster than expected. ${tRef(t,v,false)} is caught at the airport fence.`,consequences:[{text:tDeathText(t,1),type:'loss'}]};
+        }
+        if(val <= 5) {
+          const avail = t.selectedItems.filter(i=>!t.lostItems.includes(i));
+          const lost = avail[Math.floor(Math.random()*avail.length)];
+          if(lost) { tLoseItem(t,lost); const item = ITEMS.find(i=>i.id===lost); return {text:`You escape but drop your ${item?item.name:lost} in the rush. You cannot go back for it.`,consequences:[{text:`${item?item.name:lost} lost`,type:'loss'}]}; }
+        }
+        return {text:'You leave the airport quickly. Nothing lost, just time.',consequences:[{text:'No losses',type:'gain'}]};
+      }
+    );
+  }
+}
+
+function airportSkip(ti, t) {
+  OUT(ti,t,'moving on','neutral','Playing It Safe',
+    'You leave the airport and head into the countryside. <strong>Sensible, but the long walk drains your supplies.</strong> Roll to see what you lose.',
+    [],
+    1,
+    (val,t) => {
+      if(val <= 2) {
+        const v = tRandomVictim(t); if(v) tLoseMember(t,v);
+        if(v) return {text:`${tRef(t,v,true)} twists their ankle badly and cannot keep up. You have to leave them.`, consequences:[{text:tDeathText(t,1),type:'loss'}]};
+      }
+      if(val <= 4) {
+        const avail = t.selectedItems.filter(i=>!t.lostItems.includes(i));
+        const lost = avail[Math.floor(Math.random()*avail.length)];
+        if(lost) { tLoseItem(t,lost); const item = ITEMS.find(i=>i.id===lost); return {text:`You drop your ${item?item.name:lost} crossing a ditch. Gone.`, consequences:[{text:`${item?item.name:lost} lost`,type:'loss'}]}; }
+      }
+      return {text:'You make it out of the city without incident. The countryside is quiet.',consequences:[{text:'You escape',type:'gain'}]};
+    }
+  );
+}
+
+function farmFight(ti, t) {
+  const hasGun = tHas(t,'gun'), hasOther = tHas(t,'axe')||tHas(t,'knife');
+  const hasWeapon = hasGun||hasOther;
+  const hasSoldier = tHasMember(t,'soldier'), hasPolice = tHasMember(t,'police');
+  const hasFighter = hasSoldier||hasPolice;
+  const fighter = hasSoldier ? tRef(t,'soldier',true) : hasPolice ? tRef(t,'police',true) : null;
+
+  // Helper: after a fight win, check if soldier+farmer+2 alive => settle the farm
+  function farmWinNext(t) {
+    if(tHasMember(t,'soldier') && tHasMember(t,'farmer') && tTeamAlive(t) >= 4) {
+      t.settledOnFarm = true;
+      return 'win';
+    }
+    return 2;
+  }
+  function farmWinText(t) {
+    if(tHasMember(t,'soldier') && tHasMember(t,'farmer') && tTeamAlive(t) >= 4) {
+      return ` ${tRef(t,'farmer',true)} looks around the empty farm. "We could stay." ${tRef(t,'soldier',true)} nods slowly. "I can keep it safe." <strong>You don't move on. You stay. The farm is yours now.</strong>`;
+    }
+    return ' The farm is not safe to stay in, but you take everything you can carry and move on.';
+  }
+
+  if(hasSoldier && hasGun) {
+    if(!t.selectedItems.includes('cannedfood')) t.selectedItems.push('cannedfood');
+    updatePaneStatus(ti);
+    const next = farmWinNext(t);
+    OUT(ti,t,'victory','good','You Dominate',
+      `${tRef(t,'soldier',true)} opens fire. <strong>The zombies don't stand a chance.</strong> The next morning the team searches the farmhouse and finds a pantry full of canned food.${farmWinText(t)}`,
+      [{text:'Canned food found',type:'gain'}].concat(next==='win'?[{text:'You settle the farm',type:'gain'}]:[]),
+      next);
+  } else if(hasFighter && hasGun) {
+    tLoseItem(t,'gun');
+    if(!t.selectedItems.includes('cannedfood')) t.selectedItems.push('cannedfood');
+    updatePaneStatus(ti);
+    const next = farmWinNext(t);
+    OUT(ti,t,'costly win','neutral','Clean Fight, Expensive',
+      `${fighter} uses the gun to hold the line. You drive them back, but the gun jams and is destroyed in the chaos. The next morning the team finds a pantry full of canned food.${farmWinText(t)}`,
+      [{text:'One weapon lost',type:'loss'},{text:'Canned food found',type:'gain'}].concat(next==='win'?[{text:'You settle the farm',type:'gain'}]:[]),
+      next);
+  } else if(hasSoldier && hasOther) {
+    const w = tHas(t,'axe')?'axe':'knife'; tLoseItem(t,w);
+    if(!t.selectedItems.includes('cannedfood')) t.selectedItems.push('cannedfood');
+    updatePaneStatus(ti);
+    const next = farmWinNext(t);
+    OUT(ti,t,'costly win','neutral','You Hold Them Off',
+      `${tRef(t,'soldier',true)} fights hard with the ${w}. You drive them back, but the ${w} is destroyed in the fight. The next morning the team finds a pantry full of canned food.${farmWinText(t)}`,
+      [{text:'One weapon lost',type:'loss'},{text:'Canned food found',type:'gain'}].concat(next==='win'?[{text:'You settle the farm',type:'gain'}]:[]),
+      next);
+  } else if(hasFighter || hasWeapon) {
+    OUT(ti,t,'danger','bad','A Hard Fight',
+      `${t.farmAttackStory || tFarmAttackStory(t)} You fight back but you are outmatched. <strong>Someone gets bitten.</strong> Will they survive?`,
+      [], 2,
+      (val,t) => {
+        if(tHasMember(t,'doctor') && tHas(t,'firstaid')) {
+          if(hasOther) { const w=tHas(t,'axe')?'axe':'knife'; tLoseItem(t,w); }
+          if(!t.selectedItems.includes('cannedfood')) t.selectedItems.push('cannedfood');
+          const next = farmWinNext(t);
+          const tailText = next==='win' ? ` ${farmWinText(t)}` : ' The next morning the team finds canned food in the farmhouse and moves on.';
+          return {text:`${tRef(t,'doctor',true)} treats the bite immediately. They survive.${tailText}`,
+            consequences:[{text:'They survive',type:'gain'},{text:'Canned food found',type:'gain'}].concat(next==='win'?[{text:'You settle the farm',type:'gain'}]:[]),
+            nextOverride:next};
+        }
+        if(val <= 4) {
+          const v = tRandomVictim(t); if(v) tLoseMember(t,v);
+          return {text:tBittenStory(t,v), consequences:[{text:tDeathText(t,1),type:'loss'}]};
+        }
+        if(!t.selectedItems.includes('cannedfood')) t.selectedItems.push('cannedfood');
+        const next = farmWinNext(t);
+        const tailText = next==='win' ? ` ${farmWinText(t)}` : ' The next morning the team finds canned food in the farmhouse and moves on.';
+        return {text:`The bite is shallow. They survive.${tailText}`,
+          consequences:[{text:'They survive',type:'gain'},{text:'Canned food found',type:'gain'}].concat(next==='win'?[{text:'You settle the farm',type:'gain'}]:[]),
+          nextOverride:next};
+      }
+    );
+  } else {
+    OUT(ti,t,'overwhelmed','bad','Overwhelmed',
+      `${t.farmAttackStory || tFarmAttackStory(t)} <strong>No weapons. No fighters.</strong> You run, but not everyone makes it.`,
+      [], 2,
+      (val,t) => {
+        const v = tRandomVictim(t); if(v) tLoseMember(t,v);
+        if(val <= 2) {
+          const v2 = tRandomVictim(t); if(v2) tLoseMember(t,v2);
+          return {text:v&&v2?tOverwhelmedStory2(t,v,v2):tOverwhelmedStory1(t,v), consequences:[{text:tDeathText(t,v2?2:1),type:'loss'}]};
+        }
+        return {text:tOverwhelmedStory1(t,v), consequences:[{text:tDeathText(t,1),type:'loss'}]};
+      }
+    );
+  }
+}
+
+function farmRun(ti, t) {
+  OUT(ti,t,'retreat','neutral','You Run',
+    'The team leaves the farm with nothing. Everyone is alive, but hungry.',
+    [], 2,
+    (val,t) => {
+      if(val <= 2) {
+        const v = tRandomVictim(t); if(v) tLoseMember(t,v);
+        const wid = v ? tRandomWitness(t,v) : null; const w = wid?tRef(t,wid,false):'the group';
+        if(!v) return {text:'You barely escape. Everyone is exhausted but alive.',consequences:[{text:'No losses',type:'gain'}]};
+        return {text:`${tRef(t,v,true)} collapses from exhaustion on the road. ${w} tries to carry them but it is no use. You have to keep moving.`, consequences:[{text:tDeathText(t,1),type:'loss'}]};
+      }
+      if(val <= 5) {
+        t.weakened = true;
+        return {text:'The team escapes but the hunger slows everyone down.',consequences:[{text:'Team weakened',type:'loss'}]};
+      }
+      return {text:'The team escapes cleanly. Hungry, but moving fast.',consequences:[{text:'No losses',type:'gain'}]};
+    }
+  );
+}
+
+function riverRope(ti, t) {
+  if(tHas(t,'rope') && tHasMember(t,'engineer')) {
+    OUT(ti,t,'risky','neutral','Risky Crossing',
+      `${tRef(t,'engineer',true)} rigs a crossing with the rope. <strong>Roll to see if it holds.</strong>`,
+      [], 3,
+      (val,t) => {
+        if(val <= 3) {
+          tLoseItem(t,'rope');
+          return {text:`Everyone crosses safely, but the rope catches on a rock and snaps. You lose it to the river.`, consequences:[{text:'Rope lost',type:'loss'},{text:'Everyone crossed safely',type:'gain'}]};
+        }
+        return {text:`${tRef(t,'engineer',true)} rigs the crossing perfectly. Everyone gets over without a scratch. The rope holds.`, consequences:[{text:'No losses',type:'gain'}]};
+      }
+    );
+  } else if(tHas(t,'rope')) {
+    OUT(ti,t,'risky','neutral','Risky Crossing',
+      'You have the rope but no engineer. The makeshift crossing is unstable. <strong>Roll to see what happens.</strong>',
+      [], 3,
+      (val,t) => {
+        tLoseItem(t,'rope');
+        const wl = t.selectedItems.filter(i=>(i==='matches'||i==='lighter')&&!t.lostItems.includes(i));
+        if(val === 1) {
+          wl.forEach(i=>tLoseItem(t,i));
+          const v = tRandomVictim(t); if(v) tLoseMember(t,v);
+          const v2 = tRandomVictim(t); if(v2) tLoseMember(t,v2);
+          const story = v&&v2 ? tOverwhelmedStory2(t,v,v2) : tRiverStory(t,v);
+          return {text:story+(wl.length?' Your fire tools are ruined.':''), consequences:[{text:tDeathText(t,v2?2:1),type:'loss'},{text:'Rope lost',type:'loss'}].concat(wl.map(i=>({text:i+' ruined',type:'loss'})))};
+        }
+        if(val <= 3) {
+          wl.forEach(i=>tLoseItem(t,i));
+          const v = tRandomVictim(t); if(v) tLoseMember(t,v);
+          return {text:tRiverStory(t,v)+(wl.length?' Your fire tools are ruined.':''), consequences:[{text:tDeathText(t,1),type:'loss'},{text:'Rope lost',type:'loss'}].concat(wl.map(i=>({text:i+' ruined',type:'loss'})))};
+        }
+        return {text:'The crossing is rough but everyone makes it. The rope is lost to the river.', consequences:[{text:'Rope lost',type:'loss'},{text:'Everyone crossed safely',type:'gain'}]};
+      }
+    );
+  } else {
+    riverSwim(ti, t);
+  }
+}
+
+function riverSwim(ti, t) {
+  OUT(ti,t,'into the water','neutral','Into the Water',
+    `You choose to swim.${t.selectedItems.some(i=>(i==='matches'||i==='lighter')&&!t.lostItems.includes(i))?' <strong>Fire tools will be destroyed by the water.</strong>':''} Roll to see what else you lose.`,
+    [], 3,
+    (val,t) => {
+      const wl = t.selectedItems.filter(i=>(i==='matches'||i==='lighter')&&!t.lostItems.includes(i));
+      wl.forEach(i=>tLoseItem(t,i));
+      if(val <= 2) {
+        const v = tRandomVictim(t); if(v) tLoseMember(t,v);
+        const v2 = tRandomVictim(t); if(v2) tLoseMember(t,v2);
+        const riverText = v&&v2?tOverwhelmedStory2(t,v,v2):tRiverStory(t,v);
+        const riverCons = [{text:tDeathText(t,v2?2:1),type:'loss'}].concat(wl.map(i=>({text:i+' ruined',type:'loss'})));
+        if(tIsDead(t)) return {text:riverText+' The river takes everyone.',consequences:riverCons,nextOverride:'lose'};
+        return {text:riverText, consequences:riverCons};
+      }
+      if(val <= 4) {
+        const v = tRandomVictim(t); if(v) tLoseMember(t,v);
+        return {text:tRiverStory(t,v)+(wl.length?' Your fire tools are ruined.':''), consequences:[{text:tDeathText(t,1),type:'loss'}].concat(wl.map(i=>({text:i+' ruined',type:'loss'})))};
+      }
+      return {text:`Cold, exhausted, but alive.${wl.length?' Your fire tools are ruined.':''}`, consequences:wl.map(i=>({text:i+' ruined',type:'loss'})).concat([{text:'Everyone made it across',type:'gain'}])};
+    }
+  );
+}
+
+function shelterTreat(ti, t) {
+  if(tHasMember(t,'doctor') && tHas(t,'firstaid')) {
+    tLoseItem(t,'firstaid');
+    OUT(ti,t,'treated','good','Full Recovery',
+      `<strong>${tRef(t,'doctor',true)} works through the night with the first aid kit.</strong> By morning the injury is clean and dressed. The kit is empty but the team is at full strength.`,
+      [{text:'Supplies used',type:'loss'},{text:'Full recovery',type:'gain'}], 4);
+  } else if(tHasMember(t,'doctor')) {
+    const avail = t.selectedItems.filter(i=>!t.lostItems.includes(i));
+    const used = avail[Math.floor(Math.random()*avail.length)];
+    if(used) tLoseItem(t,used);
+    const usedName = used ? (ITEMS.find(i=>i.id===used)||{}).name||used : 'whatever they could find';
+    OUT(ti,t,'improvised','neutral','Improvised Treatment',
+      `<strong>${tRef(t,'doctor',true)} has no kit but improvises with ${usedName}.</strong> It is not ideal but they know what they are doing. The patient survives at full strength.`,
+      [{text:`Supplies used`,type:'loss'},{text:'Full recovery',type:'gain'}], 4);
+  } else if(tHas(t,'firstaid')) {
+    tLoseItem(t,'firstaid');
+    t.weakened = true;
+    OUT(ti,t,'partial','neutral','Partial Treatment',
+      '<strong>You have a first aid kit but no doctor.</strong> You do your best. The wound is dressed but not properly treated. The kit is empty and they are still weakened.',
+      [{text:'Supplies used',type:'loss'},{text:'Team weakened',type:'loss'}], 4);
+  } else {
+    OUT(ti,t,'high risk','bad','No Equipment, High Risk',
+      '<strong>No doctor. No kit.</strong> You try to treat the injury with nothing. This could go either way. Roll the dice.',
+      [], 4,
+      (val,t) => {
+        if(val <= 2) {
+          const v = tRandomVictim(t); if(v) tLoseMember(t,v);
+          return {text:`You make it worse. ${v?tShelterStory(t,v):'The infection spreads overnight.'}`, consequences:[{text:tDeathText(t,1),type:'loss'}]};
+        }
+        if(val <= 4) {
+          t.weakened = true;
+          return {text:'You stabilise the injury but cannot heal it properly. They survive but are weakened.',consequences:[{text:'Team weakened',type:'loss'}]};
+        }
+        return {text:'Against all odds the injury starts to heal on its own. Full recovery.',consequences:[{text:'Full recovery',type:'gain'}]};
+      }
+    );
+  }
+}
+
+function shelterRest(ti, t) {
+  t.weakened = true;
+  OUT(ti,t,'resting','neutral','You Rest',
+    'You decide not to risk making it worse. <strong>Everyone rests through the night.</strong> The injury does not heal fully but they are stable. The team enters the final scene slightly weakened.',
+    [{text:'Team weakened',type:'loss'}], 4);
+}
+
+function finalFight(ti, t) {
+  const hasGun = tHas(t,'gun'), hasOther = tHas(t,'axe')||tHas(t,'knife');
+  const hasWeapon = hasGun||hasOther;
+  const hasSoldier = tHasMember(t,'soldier'), hasPolice = tHasMember(t,'police');
+  const hasFighter = hasSoldier||hasPolice;
+  const fighter = hasSoldier ? tRef(t,'soldier',true) : hasPolice ? tRef(t,'police',true) : null;
+  const pen = t.weakened ? 1 : 0;
+  const sz = tTeamAlive(t);
+
+  if(hasSoldier && hasGun && (sz-pen) >= 2) {
+    OUT(ti,t,'victory','good','You Fight Through',
+      `${tRef(t,'soldier',true)} leads the charge. The gun clears a path. <strong>You reach the boat with your whole team.</strong> The horde crashes into the water behind you.`,
+      [{text:'You break through',type:'gain'}], 'win');
+  } else if(hasFighter && hasGun) {
+    tLoseItem(t,'gun');
+    OUT(ti,t,'costly win','neutral','You Break Through',
+      `${fighter} empties the gun into the horde. <strong>You reach the boat, but the gun is spent and destroyed.</strong> Everyone survives.`,
+      [{text:'One weapon lost',type:'loss'},{text:'You reach the boat',type:'gain'}], 'win');
+  } else if(hasSoldier && hasOther) {
+    const nf = t.selectedMembers.filter(m=>!t.lostMembers.includes(m)&&m!=='soldier'&&m!=='police');
+    const v = nf.length ? nf[Math.floor(Math.random()*nf.length)] : tRandomVictim(t);
+    if(v) tLoseMember(t,v);
+    OUT(ti,t,'almost','neutral','Almost Everyone Makes It',
+      `${tRef(t,'soldier',true)} fights hard but without a gun the horde is too large. <strong>${v?tRef(t,v,false)+' is taken':'Someone is taken'} before you reach the boat.</strong> The rest escape.`,
+      [{text:tDeathText(t,1),type:'loss'},{text:'You reach the boat',type:'gain'}], 'win');
+  } else if(hasFighter || hasWeapon) {
+    OUT(ti,t,'desperate','bad','A Desperate Push',
+      'You fight through but it costs you badly. <strong>Roll to see who makes it to the boat.</strong>',
+      [], 'win',
+      (val,t) => {
+        if(val <= 2+pen) {
+          const v = tRandomVictim(t); if(v) tLoseMember(t,v);
+          const v2 = tRandomVictim(t); if(v2) tLoseMember(t,v2);
+          if(tIsDead(t)) return {text:'Everyone is gone. The zombies take you all.',consequences:[{text:'Everyone is dead',type:'loss'}],nextOverride:'lose'};
+          return {text:tFinalLossStory(t,v),consequences:[{text:tDeathText(t,v2?2:1),type:'loss'},{text:'You escape',type:'gain'}]};
+        }
+        if(val <= 4+pen) {
+          const v = tRandomVictim(t); if(v) tLoseMember(t,v);
+          if(tIsDead(t)) return {text:'You are alone. The zombies take you too.',consequences:[{text:'Everyone is dead',type:'loss'}],nextOverride:'lose'};
+          return {text:tFinalLossStory(t,v),consequences:[{text:tDeathText(t,1),type:'loss'},{text:'You reach the boat',type:'gain'}]};
+        }
+        return {text:'The team fights through and reaches the boat. Battered but alive.',consequences:[{text:'You reach the boat',type:'gain'}]};
+      }
+    );
+  } else {
+    OUT(ti,t,'overrun','bad','Overrun',
+      '<strong>No weapons. No fighters. The horde is everywhere.</strong> Roll. Luck is the only thing that can save you.',
+      [], 'lose',
+      (val,t) => {
+        if(val <= 4+pen) {
+          t.selectedMembers.forEach(m=>{if(!t.lostMembers.includes(m))tLoseMember(t,m);});
+          return {text:'The horde is everywhere. There is no way through. Game over.',consequences:[{text:'Everyone is dead',type:'loss'}],nextOverride:'lose'};
+        }
+        const v = tRandomVictim(t); if(v) tLoseMember(t,v);
+        return {text:tFinalLossStory(t,v)+' You find a gap and sprint.',consequences:[{text:tDeathText(t,1),type:'loss'},{text:'You escape',type:'gain'}],nextOverride:'win'};
+      }
+    );
+  }
+}
+
+function finalHide(ti, t) {
+  const hasTeacher = tHasMember(t,'teacher');
+  const hasEngineer = tHasMember(t,'engineer');
+  const hasPolice = tHasMember(t,'police');
+  const bonus = (hasTeacher ? 1 : 0) + (hasEngineer ? 1 : 0) - (hasPolice ? 1 : 0);
+
+  // Build intro text reflecting the team's setup
+  let intro = 'The team hides in the hospital basement and waits.';
+  const bonusLines = [];
+  if(hasEngineer) bonusLines.push(`${tRef(t,'engineer',true)} jams the stairwell door and rigs a noise trap in the corridor above.`);
+  if(hasTeacher) bonusLines.push(`${tRef(t,'teacher',true)} keeps everyone calm, hand signals only, breathing steady.`);
+  if(hasPolice) bonusLines.push(`${tRef(t,'police',true)} is struggling to stay still. Trained to act, not wait.`);
+  if(bonusLines.length) intro += ' ' + bonusLines.join(' ');
+  intro += ' <strong>Roll to see if the horde passes.</strong>';
+
+  const modLabel = bonus > 0 ? `+${bonus} to roll` : bonus < 0 ? `${bonus} to roll` : null;
+  const cons = modLabel ? [{text: modLabel, type: bonus > 0 ? 'gain' : 'loss'}] : [];
+
+  OUT(ti,t,'hiding','neutral','Hiding in the Dark', intro, cons, 'lose',
+    (val,t) => {
+      const pen = t.weakened ? 1 : 0;
+      const effective = val + bonus - pen;
+
+      if(effective <= 2) {
+        t.selectedMembers.forEach(m=>{if(!t.lostMembers.includes(m))tLoseMember(t,m);});
+        const flavorText = hasPolice
+          ? `${tRef(t,'police',true)} breaks first. One shout. That is all it takes. They pour in.`
+          : 'The horde sweeps through every room. There is nowhere left to go.';
+        return {text: flavorText + ' Nobody makes it out.', consequences:[{text:'Everyone is dead',type:'loss'}], nextOverride:'lose'};
+      }
+      if(effective === 3) {
+        const v1 = tRandomVictim(t); if(v1) tLoseMember(t,v1);
+        const v2 = tRandomVictim(t); if(v2) tLoseMember(t,v2);
+        if(tIsDead(t)) return {text:'Two are taken before the others can escape. With no one left, it is over.',consequences:[{text:'Everyone is dead',type:'loss'}],nextOverride:'lose'};
+        const names = [v1,v2].filter(Boolean);
+        return {text:`Zombies breach the lower floor. ${names.length===2?tRef(t,v1,true)+' and '+tRef(t,v2,false)+' are':tRef(t,v1||v2,true)+' is'} caught. The rest slip out through a back window.`,
+          consequences:[{text:tDeathText(t,names.length),type:'loss'},{text:'Others escape',type:'gain'}], nextOverride:'win'};
+      }
+      if(effective <= 5) {
+        const v = tRandomVictim(t); if(v) tLoseMember(t,v);
+        if(tIsDead(t)) return {text:'One too many followed you. There is no escape.',consequences:[{text:'Everyone is dead',type:'loss'}],nextOverride:'lose'};
+        const panicText = hasTeacher
+          ? `${tRef(t,v,true)} knocks something over in the dark. The noise draws them. ${tRef(t,'teacher',false)} tried to hold them back but it was too late. The rest reach the dock.`
+          : `${tRef(t,v,true)} panics and runs. The horde follows them. The rest slip out and reach the dock.`;
+        return {text: panicText, consequences:[{text:tDeathText(t,1),type:'loss'},{text:'Others escape',type:'gain'}], nextOverride:'win'};
+      }
+      // effective 6+: full escape
+      const successText = hasEngineer && hasTeacher
+        ? `${tRef(t,'engineer',true)}'s noise trap fires at exactly the right moment. The horde turns. ${tRef(t,'teacher',false)} leads everyone out in silence. You reach the dock without losing a single person.`
+        : hasEngineer
+        ? `${tRef(t,'engineer',true)}'s distraction pulls the horde away. You slip out the back. Everyone makes it to the dock.`
+        : hasTeacher
+        ? `${tRef(t,'teacher',true)} keeps everyone calm and quiet through the whole night. When the horde passes, you walk to the dock together.`
+        : 'The horde passes. You wait until it is completely silent, then move. Everyone reaches the dock.';
+      return {text: successText, consequences:[{text:'Everyone escapes',type:'gain'}], nextOverride:'win'};
+    }
+  );
+}
+
+// ---- RESET ----
+function resetAll() {
+  teams = [];
+  numTeams = 0;
+  currentScene = 0;
+  document.getElementById('score-screen').style.display = 'none';
+  document.getElementById('lobby').style.display = 'flex';
+  document.querySelectorAll('.count-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('lobby-btn').disabled = true;
+}
+
+// ---- INIT ----
+initLobby();
+</script>
+</body>
+</html>

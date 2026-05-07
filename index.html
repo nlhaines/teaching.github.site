@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noah Libby-Haines</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Average+Sans:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        .bio {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .bio img {
+            border-radius: 50%;
+            margin-right: 50px;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .bio h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .teaching-portfolio,
+        .teaching-tools,
+        .current-focus {
+            margin-bottom: 40px;
+        }
+
+        .portfolio-item,
+        .tools-item,
+        .focus-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .portfolio-item img,
+        .tools-item img,
+        .focus-item img {
+            height: auto;
+            margin-right: 20px;
+            max-width: 15vw;
+            min-width: 120px;
+        }
+
+        .portfolio-item-description,
+        .tools-item-description,
+        .focus-item-description {
+            flex: 1;
+        }
+
+        .portfolio-item-description h3,
+        .tools-item-description h3,
+        .focus-item-description h3 {
+            margin-top: 0;
+        }
+
+        .placeholder-tile {
+            width: 15vw;
+            min-width: 120px;
+            aspect-ratio: 1 / 1;
+            margin-right: 20px;
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+            color: #666;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 700px) {
+            .bio,
+            .portfolio-item,
+            .tools-item,
+            .focus-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .bio img,
+            .portfolio-item img,
+            .tools-item img,
+            .focus-item img,
+            .placeholder-tile {
+                margin-right: 0;
+                margin-bottom: 15px;
+                max-width: 220px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="header"></div>
+
+<div class="container">
+    <section class="bio">
+        <img src="photos/headshot.jpeg" alt="Noah Libby-Haines" width="150">
+        <div>
+            <h2>CS, Mathematics and ESL educator with a background in software development and statistical research</h2>
+            <p>I am a teacher based in Vietnam pursuing international-school CS and Mathematics roles. I hold a Berkeley MA in Statistics and a Boston College BS in Computer Science, with classroom experience spanning programming, statistics, and English language instruction. I build original browser-based learning tools and deploy them directly with my students. Currently completing U.S. licensure and endorsements in CS and Mathematics, expected Summer 2026.</p>        </div>
+    </section>
+
+
+    <section id="apps" class="teaching-tools">
+        <h2>Teaching Apps and Classroom Tools</h2>
+
+        <div class="tools-item">
+            <img src="photos/classroom_apps.png" alt="Classroom apps and teaching tools">
+            <div class="tools-item-description">
+                <h3>Interactive Browser-Based Teaching Tools</h3>
+                <p>
+                    I build lightweight, single-file HTML apps designed for direct classroom use.  They work without any logins or setup required. Each tool is built around a specific pedagogical goal or lesson outcome: vocabulary reinforcement, exam preparation, or reading comprehension in context.
+                </p>
+                <p>
+                        Current examples include a zombie survival reading game for B1 English learners and a curriculum-aligned review arcade built specifically to prepare students for their End of Module assessment.
+                </p>
+                <p>
+                    <a href="apps.html">View apps</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="portfolio" class="teaching-portfolio">
+        <h2>Teaching Philosophy</h2>
+
+        <div class="portfolio-item">
+            <div class="portfolio-item-description">
+                <h3>Teaching Approach</h3>
+                <p>
+                    My teaching emphasizes clarity, structure, and genuine understanding over surface-level performance. I am especially interested in helping learners access complex ideas through strong questioning, game-based practice, metacognition, and targeted scaffolding.
+                </p>
+                <p>
+                    I believe the best classroom tools are the ones teachers build themselves, because they reflect the specific needs of specific students. That conviction is what drives me to build and iterate on my own apps rather than rely entirely on off-the-shelf materials.
+                </p>
+                <p>
+                    A fuller portfolio with lesson artifacts, teaching videos, and materials from my Moreland licensure program will be added here as it develops.
+                </p>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header').innerHTML = data;
+            });
+    });
+</script>
+
+</body>
+</html>
