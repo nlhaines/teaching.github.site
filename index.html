@@ -3,104 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noah Libby-Haines</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Average+Sans:wght@400;700&display=swap">
+    <title>Noah Libby-Haines | Teacher</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
-        .bio {
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
+        /* Page-level overrides (index.html only) */
+        body {
+            background-color: #f8f6f2;
+            color: #2d3748;
         }
 
-        .bio img {
+        .container {
+            padding: 32px 36px;
+            margin: 28px auto;
+            max-width: 920px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            border-radius: 4px;
+        }
+
+        /* Hero */
+        .hero {
+            display: flex;
+            align-items: flex-start;
+            gap: 36px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #e8e3db;
+            margin-bottom: 36px;
+        }
+
+        .hero-photo img {
             border-radius: 50%;
-            margin-right: 50px;
-            width: 150px;
-            height: 150px;
+            width: 130px;
+            height: 130px;
             object-fit: cover;
+            display: block;
             flex-shrink: 0;
         }
 
-        .bio h2 {
-            margin-top: 0;
-            margin-bottom: 10px;
+        .hero-text h2 {
+            margin: 0 0 14px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e2d40;
+            line-height: 1.3;
         }
 
-        .teaching-portfolio,
-        .teaching-tools,
-        .current-focus {
-            margin-bottom: 40px;
+        .hero-text p {
+            margin: 0 0 10px;
+            color: #4a5568;
+            max-width: 580px;
         }
 
-        .portfolio-item,
-        .tools-item,
-        .focus-item {
+        .hero-text .note {
+            font-size: 0.875rem;
+            color: #718096;
+        }
+
+        /* Section label */
+        .section-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin: 0 0 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e8e3db;
+        }
+
+        /* Teaching approach */
+        .teaching-profile {
+            margin-bottom: 44px;
+        }
+
+        .profile-grid {
             display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #ddd;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
         }
 
-        .portfolio-item img,
-        .tools-item img,
-        .focus-item img {
-            height: auto;
-            margin-right: 20px;
-            max-width: 15vw;
-            min-width: 120px;
-        }
-
-        .portfolio-item-description,
-        .tools-item-description,
-        .focus-item-description {
+        .profile-card {
             flex: 1;
+            min-width: 180px;
+            background: #f8f6f2;
+            border: 1px solid #e8e3db;
+            border-radius: 5px;
+            padding: 18px 20px;
         }
 
-        .portfolio-item-description h3,
-        .tools-item-description h3,
-        .focus-item-description h3 {
-            margin-top: 0;
+        .profile-card h3 {
+            margin: 0 0 8px;
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: #2c6e8a;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        .placeholder-tile {
-            width: 15vw;
-            min-width: 120px;
-            aspect-ratio: 1 / 1;
-            margin-right: 20px;
-            background: #f0f0f0;
-            border: 1px solid #ddd;
+        .profile-card p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .philosophy-text {
+            font-size: 0.93rem;
+            color: #4a5568;
+            line-height: 1.75;
+            margin: 0;
+            max-width: 720px;
+        }
+
+        /* Apps section */
+        .apps-section {
+            margin-bottom: 44px;
+        }
+
+        .apps-intro {
+            font-size: 0.93rem;
+            color: #4a5568;
+            margin: 0 0 24px;
+            max-width: 640px;
+            line-height: 1.65;
+        }
+
+        .app-row {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-weight: bold;
-            color: #666;
-            padding: 10px;
-            box-sizing: border-box;
+            align-items: flex-start;
+            gap: 24px;
         }
 
-        @media (max-width: 700px) {
-            .bio,
-            .portfolio-item,
-            .tools-item,
-            .focus-item {
-                flex-direction: column;
-                align-items: flex-start;
+        .app-row img {
+            width: 180px;
+            height: auto;
+            flex-shrink: 0;
+            border-radius: 4px;
+            border: 1px solid #e8e3db;
+        }
+
+        .app-row-text h3 {
+            margin: 0 0 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e2d40;
+        }
+
+        .app-row-text p {
+            margin: 0 0 10px;
+            color: #4a5568;
+            font-size: 0.9rem;
+            line-height: 1.65;
+        }
+
+        .app-row-text a {
+            color: #2c6e8a;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .app-row-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Portfolio preview */
+        .portfolio-preview {
+            margin-bottom: 16px;
+        }
+
+        .portfolio-coming {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+        }
+
+        .portfolio-coming img {
+            width: 150px;
+            height: auto;
+            flex-shrink: 0;
+            border-radius: 4px;
+            opacity: 0.6;
+        }
+
+        .portfolio-coming-text h3 {
+            margin: 0 0 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #a0aec0;
+        }
+
+        .portfolio-coming-text p {
+            margin: 0;
+            color: #718096;
+            font-size: 0.9rem;
+            line-height: 1.65;
+            max-width: 520px;
+        }
+
+        /* Responsive */
+        @media (max-width: 680px) {
+            .container {
+                padding: 20px 18px;
+                margin: 12px auto;
             }
 
-            .bio img,
-            .portfolio-item img,
-            .tools-item img,
-            .focus-item img,
-            .placeholder-tile {
-                margin-right: 0;
-                margin-bottom: 15px;
-                max-width: 220px;
-                width: 100%;
+            .hero {
+                flex-direction: column;
+                gap: 16px;
             }
+
+            .hero-photo img {
+                width: 100px;
+                height: 100px;
+            }
+
+            .profile-grid {
+                flex-direction: column;
+            }
+
+            .app-row,
+            .portfolio-coming {
+                flex-direction: column;
+            }
+
+            .app-row img,
+            .portfolio-coming img {
+                width: 100%;
+                max-width: 280px;
+            }
+
         }
     </style>
 </head>
@@ -109,55 +243,67 @@
 <div id="header"></div>
 
 <div class="container">
-    <section class="bio">
-        <img src="photos/headshot.jpeg" alt="Noah Libby-Haines" width="150">
-        <div>
-            <h2>CS, Mathematics and ESL educator with a background in software development and statistical research</h2>
-            <p>I am a teacher based in Vietnam pursuing international-school CS and Mathematics roles. I hold a Berkeley MA in Statistics and a Boston College BS in Computer Science, with classroom experience spanning programming, statistics, and English language instruction. I build original browser-based learning tools and deploy them directly with my students. Currently completing U.S. licensure and endorsements in CS and Mathematics, expected Summer 2026.</p>        </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-photo">
+            <img src="photos/headshot.jpeg" alt="Noah Libby-Haines">
+        </div>
+        <div class="hero-text">
+            <h2>Teacher using technology to support learning</h2>
+            <p>I am a teacher based in Hanoi, Vietnam, with classroom experience teaching Vietnamese learners ages 4&ndash;15 and an academic background in statistics, computer science, and mathematics. I use clear structure, questioning, student agency, and thoughtfully chosen technology to support learning.</p>
+            <p class="note">Currently pursuing U.S. teacher licensure with Computer Science and Mathematics endorsements, expected Summer 2026.</p>
+        </div>
     </section>
 
+    <!-- Teaching approach -->
+    <section class="teaching-profile">
+        <p class="section-label">Teaching Approach</p>
+        <div class="profile-grid">
+            <div class="profile-card">
+                <h3>Classroom Experience</h3>
+                <p>Recent full-time classroom teaching experience in Vietnam, working with learners from early years through lower secondary. Earlier instructional experience includes introductory programming and undergraduate statistics.</p>
+            </div>
+            <div class="profile-card">
+                <h3>Academic Background</h3>
+                <p>MA in Statistics from UC Berkeley. BS in Computer Science from Boston College. Strong foundations in quantitative reasoning and research methods.</p>
+            </div>
+            <div class="profile-card">
+                <h3>Technology in the Classroom</h3>
+                <p>I build original classroom tools and use them in class to support engagement, collaboration, review, and participation. This includes quick tools designed for a specific learning outcome, as well as reusable activities that can support review, practice, and participation across lessons.</p>
+            </div>
+        </div>
+        <p class="philosophy-text">My teaching emphasizes clarity, structure, and genuine understanding over surface-level performance. I am especially interested in helping learners access complex ideas through strong questioning, game-based practice, metacognition, and targeted scaffolding. I try to choose and adapt classroom materials to fit the needs of the students in front of me, whether that means adapting existing resources, or creating something new.</p>
+    </section>
 
-    <section id="apps" class="teaching-tools">
-        <h2>Teaching Apps and Classroom Tools</h2>
-
-        <div class="tools-item">
-            <img src="photos/classroom_apps.png" alt="Classroom apps and teaching tools">
-            <div class="tools-item-description">
-                <h3>Interactive Browser-Based Teaching Tools</h3>
-                <p>
-                    I build lightweight, single-file HTML apps designed for direct classroom use.  They work without any logins or setup required. Each tool is built around a specific pedagogical goal or lesson outcome: vocabulary reinforcement, exam preparation, or reading comprehension in context.
-                </p>
-                <p>
-                        Current examples include a zombie survival reading game for B1 English learners and a curriculum-aligned review arcade built specifically to prepare students for their End of Module assessment.
-                </p>
-                <p>
-                    <a href="apps.html">View apps</a>
-                </p>
+    <!-- Apps -->
+    <section class="apps-section">
+        <p class="section-label">Teaching Apps</p>
+        <p class="apps-intro">I create browser-based classroom activities to support specific lesson goals, such as vocabulary and grammar practice, reading in context, exam preparation, and whole-class participation. Some are quick one-off tools for a single class; others are reusable activities that can be adapted across lessons.</p>
+        <div class="app-row">
+            <img src="photos/classroom_apps.png" alt="Classroom apps in use">
+            <div class="app-row-text">
+                <h3>Language Learning Suite</h3>
+                <p>A set of three linked tools for classroom vocabulary and grammar practice: a teacher-run class game, a student self-study arcade, and a unit content builder. All three share the same lesson content, making it easy to move between whole-class activities, independent review, and content editing within one system.</p>
+                <p>Deployed with students at ILA Vietnam.</p>
+                <a href="apps.html">View all teaching apps</a>
             </div>
         </div>
     </section>
 
-
-    <section id="portfolio" class="teaching-portfolio">
-        <h2>Teaching Philosophy</h2>
-
-        <div class="portfolio-item">
-            <div class="portfolio-item-description">
-                <h3>Teaching Approach</h3>
-                <p>
-                    My teaching emphasizes clarity, structure, and genuine understanding over surface-level performance. I am especially interested in helping learners access complex ideas through strong questioning, game-based practice, metacognition, and targeted scaffolding.
-                </p>
-                <p>
-                    I believe the best classroom tools are the ones teachers build themselves, because they reflect the specific needs of specific students. That conviction is what drives me to build and iterate on my own apps rather than rely entirely on off-the-shelf materials.
-                </p>
-                <p>
-                    A fuller portfolio with lesson artifacts, teaching videos, and materials from my Moreland licensure program will be added here as it develops.
-                </p>
+    <!-- Portfolio preview -->
+    <section class="portfolio-preview">
+        <p class="section-label">Portfolio</p>
+        <div class="portfolio-coming">
+            <img src="photos/coming-soon.webp" alt="Portfolio coming soon">
+            <div class="portfolio-coming-text">
+                <h3>Coming soon</h3>
+                <p>A fuller teaching portfolio is in progress, including Moreland licensure artifacts, lesson materials, teaching videos, and selected classroom apps. It is intended to give insight into teaching ability, philosophy, and professional growth.</p>
             </div>
         </div>
     </section>
+
 </div>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

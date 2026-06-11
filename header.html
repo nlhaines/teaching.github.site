@@ -1,18 +1,28 @@
 <!-- header.html -->
 <style>
     header {
-        background: #000000;
+        background: #1e2d40;
         color: white;
         padding: 15px 0;
         text-align: center;
     }
+    header h1 {
+        margin: 0 0 6px;
+        font-size: 1.2rem;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+    }
     header nav a {
-        color: white;
-        margin: 0 15px;
+        color: rgba(255, 255, 255, 0.88);
+        margin: 0 12px;
         text-decoration: none;
+        transition: color 150ms;
+    }
+    header nav a:hover {
+        color: #fff;
     }
     body {
-        font-family: 'Average Sans', sans-serif;
+        font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif;
         line-height: 1.6;
         margin: 0;
         padding: 0;
@@ -31,12 +41,12 @@
 <header>
     <h1>Noah Libby-Haines</h1>
     <nav>
-        <a href="mailto:noahlibbyhaines@gmail.com"><i class="fas fa-envelope"></i></a>
-        <a href="index.html"><i class="fas fa-home"></i></a>
-        <a href="https://github.com/nlhaines/"><i class="fab fa-github"></i></a>
+        <a href="mailto:noahlibbyhaines@gmail.com" aria-label="Email Noah Libby-Haines"><i class="fas fa-envelope"></i></a>
+        <a href="index.html" aria-label="Home"><i class="fas fa-home"></i></a>
+        <a href="https://github.com/nlhaines/" aria-label="GitHub profile"><i class="fab fa-github"></i></a>
         <a href="resume.html">Resume</a>
         <!--<a href="portfolio.html">Portfolio</a>-->
         <a href="apps.html">Teaching Apps</a>
-        <!--<a href="aboutme.html">About</a>-->    
+        <!--<a href="aboutme.html">About</a>-->
     </nav>
 </header>
