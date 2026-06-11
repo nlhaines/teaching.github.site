@@ -136,6 +136,12 @@
             gap: 24px;
         }
 
+        .app-row + .app-row {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e8e3db;
+        }
+
         .app-row img {
             width: 180px;
             height: auto;
@@ -169,38 +175,17 @@
             text-decoration: underline;
         }
 
-        /* Portfolio preview */
+        /* Portfolio */
         .portfolio-preview {
             margin-bottom: 16px;
         }
 
-        .portfolio-coming {
-            display: flex;
-            align-items: flex-start;
-            gap: 24px;
-        }
-
-        .portfolio-coming img {
-            width: 150px;
-            height: auto;
-            flex-shrink: 0;
-            border-radius: 4px;
-            opacity: 0.6;
-        }
-
-        .portfolio-coming-text h3 {
-            margin: 0 0 8px;
-            font-size: 1rem;
-            font-weight: 700;
-            color: #a0aec0;
-        }
-
-        .portfolio-coming-text p {
-            margin: 0;
-            color: #718096;
+        .portfolio-text {
             font-size: 0.9rem;
+            color: #718096;
             line-height: 1.65;
-            max-width: 520px;
+            margin: 0;
+            max-width: 600px;
         }
 
         /* Responsive */
@@ -224,13 +209,11 @@
                 flex-direction: column;
             }
 
-            .app-row,
-            .portfolio-coming {
+            .app-row {
                 flex-direction: column;
             }
 
-            .app-row img,
-            .portfolio-coming img {
+            .app-row img {
                 width: 100%;
                 max-width: 280px;
             }
@@ -281,26 +264,28 @@
         <p class="section-label">Teaching Apps</p>
         <p class="apps-intro">I create browser-based classroom activities to support specific lesson goals, such as vocabulary and grammar practice, reading in context, exam preparation, and whole-class participation. Some are quick one-off tools for a single class; others are reusable activities that can be adapted across lessons.</p>
         <div class="app-row">
-            <img src="photos/classroom_apps.png" alt="Classroom apps in use">
+            <img src="photos/classroom_apps.png" alt="Language Learning Suite">
             <div class="app-row-text">
                 <h3>Language Learning Suite</h3>
-                <p>A set of three linked tools for classroom vocabulary and grammar practice: a teacher-run class game, a student self-study arcade, and a unit content builder. All three share the same lesson content, making it easy to move between whole-class activities, independent review, and content editing within one system.</p>
+                <p>A suite of classroom vocabulary and grammar activities: a teacher-run class game with multiple game formats, a student self-study arcade for independent practice, and a unit content builder. All three tools share the same lesson content, supporting whole-class activities, independent review, and lesson preparation within one system.</p>
                 <p>Deployed with students at ILA Vietnam.</p>
                 <a href="apps.html">View all teaching apps</a>
             </div>
         </div>
-    </section>
-
-    <!-- Portfolio preview -->
-    <section class="portfolio-preview">
-        <p class="section-label">Portfolio</p>
-        <div class="portfolio-coming">
-            <img src="photos/coming-soon.webp" alt="Portfolio coming soon">
-            <div class="portfolio-coming-text">
-                <h3>Coming soon</h3>
-                <p>A fuller teaching portfolio is in progress, including Moreland licensure artifacts, lesson materials, teaching videos, and selected classroom apps. It is intended to give insight into teaching ability, philosophy, and professional growth.</p>
+        <div class="app-row">
+            <img src="photos/zombie_survival_thumb.png" alt="Zombie Survival Game">
+            <div class="app-row-text">
+                <h3>Zombie Survival Game</h3>
+                <p>A choose-your-own-adventure reading activity for B1 English learners. Students work through survival scenarios that require reading, vocabulary use, and group decision-making.</p>
+                <a href="apps/zombie_game_v3.html">Open app</a>
             </div>
         </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section class="portfolio-preview">
+        <p class="section-label">Portfolio</p>
+        <p class="portfolio-text">A teaching portfolio is in progress, including Moreland licensure artifacts, lesson materials, teaching videos, and selected classroom apps. Selected pieces will be added here as they are ready.</p>
     </section>
 
 </div>

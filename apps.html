@@ -4,26 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teaching Apps by Noah Libby-Haines</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Average+Sans:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
+        /* Page-level overrides */
+        body {
+            background-color: #f8f6f2;
+            color: #2d3748;
+        }
+
+        .container {
+            padding: 32px 36px;
+            margin: 28px auto;
+            max-width: 920px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            border-radius: 4px;
+        }
+
+        /* Section label */
+        .section-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin: 0 0 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e8e3db;
+        }
+
+        /* Page intro */
+        .page-intro {
+            font-size: 0.93rem;
+            color: #4a5568;
+            margin: 0 0 28px;
+            max-width: 640px;
+            line-height: 1.65;
+        }
+
+        /* App items */
         .apps-section {
-            margin-bottom: 40px;
+            margin-bottom: 0;
         }
 
         .app-item {
             display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #ddd;
+            align-items: flex-start;
+            gap: 24px;
+            padding-bottom: 28px;
+            margin-bottom: 28px;
+            border-bottom: 1px solid #e8e3db;
+        }
+
+        .app-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
         }
 
         .app-item img {
+            width: 180px;
             height: auto;
-            margin-right: 20px;
-            max-width: 15vw;
-            min-width: 120px;
+            flex-shrink: 0;
+            border-radius: 4px;
+            border: 1px solid #e8e3db;
         }
 
         .app-description {
@@ -31,25 +75,53 @@
         }
 
         .app-description h3 {
-            margin-top: 0;
-            margin-bottom: 8px;
+            margin: 0 0 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e2d40;
+        }
+
+        .app-description p {
+            font-size: 0.9rem;
+            color: #4a5568;
+            line-height: 1.65;
+            margin: 0 0 10px;
+        }
+
+        .app-description ol {
+            font-size: 0.9rem;
+            color: #4a5568;
+            line-height: 1.65;
+            margin: 0 0 10px;
+            padding-left: 20px;
         }
 
         .app-links a {
+            color: #2c6e8a;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
             margin-right: 15px;
         }
 
-        @media (max-width: 700px) {
+        .app-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 680px) {
+            .container {
+                padding: 20px 18px;
+                margin: 12px auto;
+            }
+
             .app-item {
                 flex-direction: column;
-                align-items: flex-start;
             }
 
             .app-item img {
-                margin-right: 0;
-                margin-bottom: 15px;
-                max-width: 220px;
                 width: 100%;
+                max-width: 280px;
             }
         }
     </style>
@@ -59,73 +131,41 @@
 <div id="header"></div>
 
 <div class="container">
-<section class="apps-section">
-    <h2>Teaching Apps and Learning Games</h2>
-    <p>
-        These are browser-based tools I have built for classroom use and student 
-        self-study, deployed directly with my students at ILA Vietnam.
-    </p>
+    <section class="apps-section">
+        <p class="section-label">Teaching Apps</p>
+        <p class="page-intro">These are browser-based classroom activities I have built and used with students at ILA Vietnam.</p>
 
-    <div class="app-item">
-        <img src="photos/language_arcade.png" alt="Language Learning Suite">
-        <div class="app-description">
-            <h3>Language Learning Suite</h3>
-            <p>
-                A custom client-side suite of web applications built from scratch vanilla JS with no
-                frameworks or build tools to be self-contained so any teacher can deploy it with nothing
-                more than a classroom laptop or PC.  It is comprised of three tools:
+        <div class="app-item">
+            <img src="photos/language_arcade.png" alt="Language Learning Suite">
+            <div class="app-description">
+                <h3>Language Learning Suite</h3>
+                <p>A suite of three linked classroom tools for vocabulary and grammar practice:</p>
                 <ol>
-                    <li>a teacher-run classroom game platform with game and scoring method interfaces as well as 7 playable games,</li>
-                    <li>a student-facing self-study arcade,</li> 
-                    <li>and a teacher authoring tool for building and editing unit content.</li>
+                    <li>a teacher-run game platform with multiple game formats and a class scoring system,</li>
+                    <li>a student self-study arcade for independent practice and review,</li>
+                    <li>and a content builder for creating and editing unit materials.</li>
                 </ol>
-                
-                All three tools share a custom JSON data schema covering vocabulary, grammar structures, model sentences, visual aids, and four question types.
-                As built, one content file runs with all 3 user interfaces, gamifying classroom study, self-study and allowing teacher-driven content refinement.
-                Also included is an AI prompt, and JSON schema files, to allow teachers to quickly
-                and easily leverage widely available AI tools to generate lesson content suited to their learners and curriculum.
-            </p>
-            
-            <div class="app-links">
-                <a href="apps/LL-game/classroom.html">Classroom tool</a>
-                <a href="apps/LL-game/index.html">Student arcade</a>
-                <a href="apps/LL-game/builder.html">Unit builder</a>
-                <a href="https://github.com/nlhaines/LanguageLearningSuite">GitHub</a>
+                <p>All three tools run from the same lesson content, making it easy to support whole-class activities, student self-study, and ongoing lesson refinement within one system.</p>
+                <div class="app-links">
+                    <a href="apps/LL-game/classroom.html">Classroom tool</a>
+                    <a href="apps/LL-game/index.html">Student arcade</a>
+                    <a href="apps/LL-game/builder.html">Unit builder</a>
+                    <a href="https://github.com/nlhaines/LanguageLearningSuite">GitHub</a>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="app-item">
-        <img src="photos/zombie_survival_thumb.png" alt="Zombie Survival Game">
-        <div class="app-description">
-            <h3>Zombie Survival Game</h3>
-            <p>
-                A choose-your-own-adventure reading game for B1 English learners, in 
-                which students navigate survival scenarios that require engaging with 
-                the unit vocabulary, collaboration with their peers, and critical 
-                thinking skills. The game incorporates movement via a sticky-ball throw 
-                that can replace the game's dice-roll luck mechanism.
-            </p>
-            <div class="app-links">
-                <a href="apps/zombie_game_v3.html">Open app</a>
+        <div class="app-item">
+            <img src="photos/zombie_survival_thumb.png" alt="Zombie Survival Game">
+            <div class="app-description">
+                <h3>Zombie Survival Game</h3>
+                <p>A choose-your-own-adventure reading activity for B1 English learners. Students work through survival scenarios that require reading, vocabulary use, and group decision-making. The game supports movement through an optional sticky-ball throw that can replace the dice-roll mechanic.</p>
+                <div class="app-links">
+                    <a href="apps/zombie_game_v3.html">Open app</a>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="app-item">
-        <img src="photos/viet_arcade_thumb.png" alt="Language learning arcade">
-        <div class="app-description">
-            <h3>Vietnamese Learning Arcade</h3>
-            <p>
-                A browser-based arcade activity I built for my own Vietnamese learning 
-                and practice.
-            </p>
-            <div class="app-links">
-                <a href="apps/viet-arcade-v4.html">Open app</a>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
 </div>
 
 <script>
