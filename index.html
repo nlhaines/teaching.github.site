@@ -177,15 +177,60 @@
 
         /* Portfolio */
         .portfolio-preview {
-            margin-bottom: 16px;
+            margin-bottom: 0;
         }
 
-        .portfolio-text {
-            font-size: 0.9rem;
-            color: #718096;
+        .portfolio-intro {
+            font-size: 0.93rem;
+            color: #4a5568;
+            margin: 0 0 20px;
+            max-width: 680px;
             line-height: 1.65;
+        }
+
+        .portfolio-preview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .portfolio-preview-card {
+            border: 1px solid #e8e3db;
+            border-radius: 4px;
+            padding: 14px 16px;
+        }
+
+        .portfolio-preview-card a {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #1e2d40;
+            text-decoration: none;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+
+        .portfolio-preview-card a:hover {
+            color: #2c6e8a;
+        }
+
+        .portfolio-preview-card p {
+            font-size: 0.82rem;
+            color: #718096;
             margin: 0;
-            max-width: 600px;
+            line-height: 1.5;
+        }
+
+        .portfolio-view-all {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #2c6e8a;
+            text-decoration: none;
+        }
+
+        .portfolio-view-all:hover {
+            text-decoration: underline;
         }
 
         /* Responsive */
@@ -216,6 +261,10 @@
             .app-row img {
                 width: 100%;
                 max-width: 280px;
+            }
+
+            .portfolio-preview-grid {
+                grid-template-columns: 1fr;
             }
 
         }
@@ -284,8 +333,31 @@
 
     <!-- Portfolio -->
     <section class="portfolio-preview">
-        <p class="section-label">Portfolio</p>
-        <p class="portfolio-text">A teaching portfolio is in progress, including Moreland licensure artifacts, lesson materials, teaching videos, and selected classroom apps. Selected pieces will be added here as they are ready.</p>
+        <p class="section-label">Teaching Portfolio</p>
+        <p class="portfolio-intro">Selected teaching artifacts from classroom practice at ILA Vietnam and Moreland licensure work, including recorded lessons, lesson plans, classroom tools, unit planning, project-based learning, and student support systems.</p>
+        <div class="portfolio-preview-grid">
+            <div class="portfolio-preview-card">
+                <a href="portfolio.html#classroom-games">Custom Classroom Games: Language Learning Suite in Practice</a>
+                <p>Recorded lesson with vocabulary and grammar games at ILA Vietnam</p>
+            </div>
+            <div class="portfolio-preview-card">
+                <a href="portfolio.html#zombie-survival">Zombie Survival Game: Reading Lesson, App, and Teaching Video</a>
+                <p>Recorded B1 reading lesson, lesson plan, and classroom app</p>
+            </div>
+            <div class="portfolio-preview-card">
+                <a href="portfolio.html#unit-plan">Unit Plan: Multidisciplinary English Instruction</a>
+                <p>B1 unit-level planning, sequencing, and curriculum design</p>
+            </div>
+            <div class="portfolio-preview-card">
+                <a href="portfolio.html#whos-your-idol">&ldquo;Who&rsquo;s Your Idol?&rdquo; Project-Based Learning Unit</a>
+                <p>Project-based learning, analytic rubric, and teaching reflection</p>
+            </div>
+            <div class="portfolio-preview-card">
+                <a href="portfolio.html#supporting-learners">Supporting Learners with Differences</a>
+                <p>Student support planning and differentiation systems</p>
+            </div>
+        </div>
+        <a href="portfolio.html" class="portfolio-view-all">View full teaching portfolio</a>
     </section>
 
 </div>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementing Authentic Performance Based Assessments | Noah Libby-Haines</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f6f2;
+            color: #2d3748;
+        }
+        .container {
+            width: 80%;
+            padding: 32px 36px;
+            margin: 28px auto;
+            max-width: 800px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .back-link {
+            display: inline-block;
+            color: #2c6e8a;
+            font-size: 0.88rem;
+            font-weight: 700;
+            text-decoration: none;
+            margin-bottom: 28px;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .artifact-title {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: #1e2d40;
+            margin: 0 0 6px;
+            line-height: 1.3;
+        }
+        .artifact-meta {
+            font-size: 0.85rem;
+            color: #718096;
+            margin: 0 0 28px;
+        }
+        /* Classroom photo grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin: 0 0 36px;
+        }
+        .photo-grid img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #e8e3db;
+            display: block;
+        }
+        /* Body sections */
+        .artifact-page h2 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #1e2d40;
+            margin: 36px 0 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e8e3db;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .artifact-page p {
+            font-size: 0.93rem;
+            color: #4a5568;
+            line-height: 1.75;
+            margin: 0 0 16px;
+            max-width: 680px;
+        }
+        .artifact-page ul, .artifact-page ol {
+            font-size: 0.93rem;
+            color: #4a5568;
+            line-height: 1.75;
+            margin: 0 0 16px;
+            padding-left: 22px;
+            max-width: 680px;
+        }
+        .artifact-page li { margin-bottom: 6px; }
+        /* Document links */
+        .doc-links {
+            margin: 4px 0 20px;
+        }
+        .doc-links a {
+            color: #2c6e8a;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            margin-right: 18px;
+        }
+        .doc-links a:hover { text-decoration: underline; }
+        /* Assessment tool images */
+        .artifact-img {
+            margin: 12px 0 24px;
+            max-width: 580px;
+        }
+        .artifact-img img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #e8e3db;
+            border-radius: 4px;
+            display: block;
+        }
+        .artifact-caption {
+            font-size: 0.8rem;
+            color: #a0aec0;
+            font-style: italic;
+            margin: 6px 0 0;
+        }
+        /* Block quote for direct quote */
+        blockquote {
+            border-left: 3px solid #e8e3db;
+            margin: 0 0 16px;
+            padding: 4px 0 4px 18px;
+            max-width: 680px;
+        }
+        blockquote p {
+            color: #4a5568;
+            font-style: italic;
+            margin: 0;
+        }
+        /* Responsive */
+        @media (max-width: 680px) {
+            .container { padding: 20px 18px; margin: 12px auto; }
+            .photo-grid { grid-template-columns: 1fr 1fr; }
+            .photo-grid img { height: 140px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="header"></div>
+
+<div class="container">
+    <a class="back-link" href="../portfolio.html">&#8592; Back to portfolio</a>
+
+    <h1 class="artifact-title">Implementing Authentic Performance Based Assessments</h1>
+    <p class="artifact-meta">Project: &ldquo;Who&rsquo;s Your Idol?&rdquo; &nbsp;&middot;&nbsp; A2-level students, ages 9&ndash;11 &nbsp;&middot;&nbsp; ILA Vietnam &nbsp;&middot;&nbsp; Moreland University, Module 8</p>
+
+    <div class="photo-grid">
+        <img src="whos_your_idol/images/ss-surrounding-and-working-on-poster.jpg" alt="Students collaborating on a poster">
+        <img src="whos_your_idol/images/ss-working-posters.jpg" alt="Students working on posters">
+        <img src="whos_your_idol/images/ss-presenting.jpg" alt="Student presenting to the class">
+    </div>
+
+    <div class="artifact-page">
+
+        <h2>Summary of Project Implementation</h2>
+        <p>I implemented a two-lesson project-based learning sequence for a J4B class at ILA Vietnam (A2-level, ages 9&ndash;11). Students researched a person they admired, created a poster, wrote a presentation script, and delivered an oral presentation to the class. I assessed their work using an analytic rubric covering six criteria: Communication, Collaboration, Creativity, Critical Thinking, Reflection, and Language Use.</p>
+        <p>Key successes included:</p>
+        <ul>
+            <li>Strong student engagement and collaboration, particularly around personally meaningful topics such as footballers, K-pop artists, and Vietnamese heroes</li>
+            <li>A teacher-model presentation using Lionel Messi that clarified expectations for the task</li>
+            <li>Several quieter students stepping up and contributing visibly during group work</li>
+            <li>Active peer engagement through listening handouts that functioned as peer-assessment tools</li>
+        </ul>
+        <p>Significant challenges included:</p>
+        <ul>
+            <li>Students unfamiliar with formal rubrics required extended explanation before they could use them meaningfully</li>
+            <li>A persistent student habit of writing full sentences on posters and reading from them verbatim, despite instructions emphasizing the distinction between poster and script</li>
+        </ul>
+        <p>These challenges reflect InTASC Standards 4 and 5: anticipating student misconceptions and designing tasks that give students authentic, meaningful reasons to use language.</p>
+
+        <h2>How Students Used the Rubric for Self-Assessment and Peer Feedback</h2>
+        <p>The rubric introduction included slides showing five performance levels in student-friendly language, with guiding questions for each criterion. For Communication, the guiding question was "Did I share my ideas?"; for Language Use, "Did I use good English?" Students received printed copies of the rubric to reference during their work.</p>
+        <div class="doc-links">
+            <a href="whos_your_idol/documents/rubric_handout.pdf">Student rubric handout</a>
+            <a href="whos_your_idol/documents/rubric_slides.pdf">Rubric introduction slides</a>
+        </div>
+        <p>Peer and self-assessment occurred through four instruments:</p>
+        <ul>
+            <li><strong>Listening handouts:</strong> students noted strengths, ideas to emulate, and questions for each presenting group</li>
+            <li><strong>Individual verbal self-assessments:</strong> guided by rubric prompts during and after presentations</li>
+            <li><strong>Written team reflection surveys:</strong> evaluating group collaboration, role distribution, and personal contributions</li>
+            <li><strong>Individual reflection handouts:</strong> addressing project satisfaction and goals for improvement</li>
+        </ul>
+        <div class="artifact-img">
+            <img src="whos_your_idol/images/listening-notes-example.png" alt="Example of a completed student listening handout">
+            <p class="artifact-caption">Example of a completed listening handout</p>
+        </div>
+        <p>Summative scores and feedback were entered into the institution's learning management system for parent communication.</p>
+        <div class="artifact-img">
+            <img src="whos_your_idol/images/team-reflection-survey-example.png" alt="Team reflection survey used after presentations">
+            <p class="artifact-caption">Team reflection survey used after presentations</p>
+        </div>
+
+        <h2>Analysis of Student Achievement</h2>
+        <p>Group averages ranged from 4.4 to 5.0 out of 5.</p>
+        <p>Strengths across the class:</p>
+        <ul>
+            <li>Communication and Collaboration were consistently the strongest criteria</li>
+            <li>Several quieter students demonstrated increased participation and engagement compared to typical lessons</li>
+            <li>One group achieved exceptional scores across all six criteria</li>
+        </ul>
+        <p>Areas of struggle:</p>
+        <ul>
+            <li>Language Use scores were the lowest overall. Most students read directly from their scripts rather than speaking to the audience, which limited spontaneity and oral fluency.</li>
+            <li>Poster designs were often limited in creativity because scripts dominated the available space on the poster</li>
+            <li>One group showed unequal participation; team reflection surveys identified one student as contributing significantly less than their peers</li>
+        </ul>
+        <p>Contextual factors I considered when scoring:</p>
+        <ul>
+            <li>One group was affected when a key member was absent on presentation day; the remaining students adapted by dividing tasks and completing the presentation independently</li>
+            <li>Some students showed lower investment when assigned to research someone they had not chosen themselves</li>
+        </ul>
+        <p>Drawing on multiple data sources -- rubric scores, direct observation, listening handouts, and team surveys -- made this a more honest and complete picture of student performance than a single assessment instrument would have provided. This approach reflects InTASC Standard 6.</p>
+
+        <h2>Evaluation of the Rubric and Potential Revisions</h2>
+        <p>As a teacher assessment tool, the six criteria and five-point scale worked well. The framework gave me clear, meaningful distinctions across groups and criteria, especially when I cross-referenced rubric scores with direct observation and survey responses.</p>
+        <p>For student use, the rubric was too complex. Six criteria created excessive cognitive load for A2-level learners who had not used rubrics before and were simultaneously managing English production and a new task format. During self-assessments, I found myself providing substantial scaffolding rather than students engaging with the criteria independently. Many students gave surface-level responses on the reflection handouts, suggesting discomfort with the metacognitive demands rather than genuine reflection on their learning.</p>
+        <p>Proposed revisions for student use:</p>
+        <ul>
+            <li>Create a separate simplified student-facing rubric with two or three criteria maximum</li>
+            <li>Write it in basic English with visual cues or icons supporting each criterion</li>
+            <li>Build in explicit practice using the rubric before the assessed task begins</li>
+        </ul>
+        <p>There is a real tension in this unit: the course assignment required an analytic rubric format, and that format genuinely served my assessment needs. But it did not serve student self-assessment at this level. The revisions above would maintain teacher-assessment effectiveness while making the criteria accessible and useful to students, which is what InTASC Standard 6 asks for in terms of transparency and utility.</p>
+
+        <h2>Improvements for Future Iterations</h2>
+        <p><strong>Improvement 1: Group students by interest rather than ability.</strong></p>
+        <blockquote><p>"In future iterations I would give students the opportunity to self-organize around a shared idol first."</p></blockquote>
+        <p>The driving question for this project only functions as a genuine motivator when students care about the person they are researching. When students are assigned to a group researching someone they did not choose, the authentic purpose of the task is diminished. Allowing students to self-organize around shared interest also introduces negotiation and compromise as incidental skills. This reflects InTASC Standard 5: connecting content to students' own lives and interests to make language use meaningful rather than performative.</p>
+        <p><strong>Improvement 2: Address poster format expectations through explicit questioning.</strong></p>
+        <p>The teacher-model presentation I used demonstrated spoken delivery clearly, but it did not sufficiently address the difference between what belongs on a poster and what belongs in a spoken script. Students defaulted to writing full sentences on their posters and reading from them verbatim. For a future iteration, I would build in targeted questioning during the work phase, asking students directly: "Are there full sentences on your poster?" and "Are you going to read from it?" These questions address the specific misconception before it shapes the final product. This reflects InTASC Standard 4: identifying and directly addressing predictable student misconceptions rather than assuming prior instruction was sufficient.</p>
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('../header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header').innerHTML = data;
+            });
+    });
+</script>
+
+</body>
+</html>
