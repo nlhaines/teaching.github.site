@@ -6,3 +6,14 @@ AGENTS.md
 recommendations.md
 redesign.md
 todo.txt
+
+# Local Striker Scout development/review lab. Final artifacts are copied
+# into a curated public location under portfolio/.
+stats_teaching_demo/
+
+# Intentionally local source files.
+portfolio/lesson_plans/U3A2 - Unit Plan.docx
+
+# Python caches.
+__pycache__/
+*.pyc
