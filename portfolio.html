@@ -1,272 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teaching Portfolio | Noah Libby-Haines</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        body {
-            background-color: #f8f6f2;
-            color: #2d3748;
-        }
-        .container {
-            width: 80%;
-            padding: 32px 36px;
-            margin: 28px auto;
-            max-width: 920px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .section-label {
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: #718096;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin: 0 0 20px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #e8e3db;
-        }
-        .page-intro {
-            font-size: 0.93rem;
-            color: #4a5568;
-            margin: 0 0 44px;
-            max-width: 680px;
-            line-height: 1.65;
-        }
-        .portfolio-section {
-            margin-bottom: 44px;
-        }
-        .portfolio-section:last-child {
-            margin-bottom: 0;
-        }
-        .portfolio-card {
-            border: 1px solid #e8e3db;
-            border-radius: 5px;
-            padding: 22px 24px;
-            margin-bottom: 14px;
-        }
-        .portfolio-card:last-child {
-            margin-bottom: 0;
-        }
-        .portfolio-card h3 {
-            margin: 0 0 8px;
-            font-size: 1rem;
-            font-weight: 700;
-            color: #1e2d40;
-        }
-        .portfolio-card p {
-            font-size: 0.9rem;
-            color: #4a5568;
-            line-height: 1.65;
-            margin: 0 0 8px;
-        }
-        .demonstrates {
-            font-size: 0.83rem;
-            color: #718096;
-            margin: 4px 0 10px;
-            line-height: 1.5;
-        }
-        .demonstrates strong {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 700;
-        }
-        .card-links {
-            margin-top: 10px;
-        }
-        .card-links a {
-            color: #2c6e8a;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            margin-right: 15px;
-        }
-        .card-links a:hover {
-            text-decoration: underline;
-        }
-        .video-pending {
-            font-size: 0.85rem;
-            color: #a0aec0;
-            font-style: italic;
-            margin-right: 15px;
-            display: inline-block;
-        }
-        .video-card-layout::after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-        .video-chip {
-            display: flex;
-            flex-direction: column;
-            float: left;
-            width: 175px;
-            margin: 0 28px 14px 0;
-            text-decoration: none;
-            padding: 6px;
-            border: 1px solid #e8e3db;
-            border-radius: 6px;
-            background: #fbfaf8;
-            transition: border-color 0.15s, background 0.15s;
-        }
-        .video-chip:hover {
-            border-color: #2c6e8a;
-            background: #f4f8fa;
-        }
-        .video-chip-thumb {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            border-radius: 4px;
-            overflow: hidden;
-            background: #1e2d40;
-        }
-        .video-chip-thumb img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .video-chip-play {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            background: rgba(30,45,64,0.78);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .video-chip-play i { color: #fff; font-size: 0.8rem; margin-left: 2px; }
-        .video-chip:hover .video-chip-play { background: #2c6e8a; }
-        .video-chip-text {
-            text-align: center;
-            padding: 7px 4px 3px;
-        }
-        .video-chip-text .label {
-            display: block;
-            color: #1e2d40;
-            font-weight: 700;
-            font-size: 0.88rem;
-        }
-        @media (max-width: 680px) {
-            .container { padding: 20px 18px; margin: 12px auto; }
-            .video-chip { float: none; width: 100%; max-width: 280px; margin-right: 0; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teaching Portfolio | Noah Libby-Haines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/motion.js"></script>
+<link rel="icon" href="data:,">
 </head>
 <body>
 
-<div id="header"></div>
+<a class="skip" href="#main">Skip to content</a>
 
-<div class="container">
+<header class="bar">
+  <div class="bar-in">
+    <p class="bar-name">Noah Libby-Haines</p>
+    <nav class="bar-nav" aria-label="Site">
+      <a class="ico" href="mailto:him@noahlibbyhaines.com" aria-label="Email Noah Libby-Haines"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+      <a class="ico" href="index.html" aria-label="Home"><i class="fas fa-home" aria-hidden="true"></i></a>
+      <a class="ico" href="https://github.com/nlhaines/" aria-label="GitHub profile"><i class="fab fa-github" aria-hidden="true"></i></a>
+      <a href="resume.html">Resume</a>
+      <a href="portfolio.html" aria-current="page">Portfolio</a>
+      <a href="apps.html">Teaching Apps</a>
+    </nav>
+  </div>
+</header>
 
-    <p class="section-label">Teaching Portfolio</p>
+<main id="main">
+
+<section class="page-head">
+  <div class="wrap">
+    <h1>Teaching portfolio</h1>
     <p class="page-intro">Selected artifacts from full-time classroom teaching at ILA Vietnam and teacher preparation coursework at Moreland University. These pieces give insight into classroom practice, lesson design, assessment, and professional reflection.</p>
+  </div>
+</section>
 
-    <!-- Section 1: Featured Teaching Artifacts -->
-    <div class="portfolio-section">
-        <p class="section-label">Recorded Lessons and Supporting Materials</p>
+<!-- Section 1: Recorded lessons -->
+<section class="sec" id="recorded-lessons" aria-labelledby="rl-title">
+  <div class="wrap">
+    <header class="sec-head">
+      <h2 id="rl-title">Recorded lessons and supporting materials</h2>
+    </header>
 
-        <div class="portfolio-card" id="classroom-games">
-            <div class="video-card-layout">
-                <a class="video-chip" href="https://youtu.be/0RWtmdgBrx8">
-                    <span class="video-chip-thumb">
-                        <img src="https://img.youtube.com/vi/0RWtmdgBrx8/hqdefault.jpg" alt="Recorded classroom games lesson">
-                        <span class="video-chip-play"><i class="fas fa-play"></i></span>
-                    </span>
-                    <span class="video-chip-text">
-                        <span class="label">Watch lesson</span>
-                    </span>
-                </a>
-                <div class="video-card-content">
-                    <h3>Custom Classroom Games: Language Learning Suite in Practice</h3>
-                    <p>A recorded class at ILA Vietnam using classroom.html, the teacher-run game platform from the Language Learning Suite. The lesson uses custom vocabulary and grammar games for whole-class review: teacher facilitation, student team play, and real-time scoring.</p>
-                    <p class="demonstrates"><strong>Demonstrates:</strong> live classroom teaching, teacher presence and facilitation, whole-class participation, review and practice activity design, original classroom software in use</p>
-                    <div class="card-links">
-                        <a href="portfolio/lesson_plans/classroom_games_eomt_review.pdf">Lesson plan</a>
-                        <a href="apps/LL-game/classroom.html">Open classroom games app</a>
-                    </div>
-                </div>
-            </div>
+    <article class="pair" id="classroom-games">
+      <div class="pair-media">
+        <a class="frame frame-class" href="https://youtu.be/0RWtmdgBrx8" aria-label="Watch lesson: Custom Classroom Games (YouTube)">
+          <img src="assets/img/class-games-lesson.webp" width="1280" height="720" alt="Recorded classroom games lesson">
+          <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="frame-label">Watch lesson</span>
+        </a>
+        <div class="frame frame-app">
+          <img src="assets/img/app-auction.webp" width="1200" height="750" alt="Sentence Auction, one of the classroom games: English sentences with errors for teams to bid on and correct">
         </div>
+      </div>
+      <div class="pair-text">
+        <h3>Custom Classroom Games: Language Learning Suite in Practice</h3>
+        <p>A recorded class at ILA Vietnam using the teacher-run game platform from the Language Learning Suite. The lesson uses custom vocabulary and grammar games for whole-class review: teacher facilitation, student team play, and real-time scoring.</p>
+        <p class="demonstrates"><strong>Demonstrates</strong>live classroom teaching, teacher presence and facilitation, whole-class participation, review and practice activity design, original classroom software in use</p>
+        <ul class="links">
+          <li><a href="https://youtu.be/0RWtmdgBrx8">Watch lesson</a></li>
+          <li><a href="portfolio/lesson_plans/classroom_games_eomt_review.pdf">Lesson plan</a></li>
+          <li><a href="apps/LL-game/classroom.html">Open classroom games app</a></li>
+        </ul>
+      </div>
+    </article>
 
-        <div class="portfolio-card" id="zombie-survival">
-            <div class="video-card-layout">
-                <a class="video-chip" href="https://www.youtube.com/watch?v=Rjse7mLKOV4">
-                    <span class="video-chip-thumb">
-                        <img src="https://img.youtube.com/vi/Rjse7mLKOV4/hqdefault.jpg" alt="Recorded zombie survival reading lesson">
-                        <span class="video-chip-play"><i class="fas fa-play"></i></span>
-                    </span>
-                    <span class="video-chip-text">
-                        <span class="label">Watch lesson</span>
-                    </span>
-                </a>
-                <div class="video-card-content">
-                    <h3>Zombie Survival Game: Reading Lesson, App, and Teaching Video</h3>
-                    <p>A recorded B1 reading lesson at ILA Vietnam using the Zombie Survival Game, a choose-your-own-adventure activity built for the class. Students worked through survival scenarios requiring close reading, vocabulary use, and group decision-making.</p>
-                    <p class="demonstrates"><strong>Demonstrates:</strong> game-based reading instruction, lesson planning and design, classroom facilitation, connecting a learning tool to a specific lesson outcome</p>
-                    <div class="card-links">
-                        <a href="portfolio/lesson_plans/zombie_survival_lp.pdf">Lesson plan</a>
-                        <a href="apps/zombie_game_v3.html">Open interactive zombie reading app</a>
-                    </div>
-                </div>
-            </div>
+    <article class="pair pair-flip" id="zombie-survival">
+      <div class="pair-media">
+        <a class="frame frame-class" href="https://www.youtube.com/watch?v=Rjse7mLKOV4" aria-label="Watch lesson: Zombie Survival Game (YouTube)">
+          <img src="assets/img/class-zombie-lesson.webp" width="1280" height="720" alt="Recorded zombie survival reading lesson">
+          <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="frame-label">Watch lesson</span>
+        </a>
+        <div class="frame frame-app">
+          <img src="assets/img/app-zombie-kit.webp" width="1200" height="688" alt="Zombie Survival Game setup screen where each team chooses survival items and team members">
         </div>
+      </div>
+      <div class="pair-text">
+        <h3>Zombie Survival Game: Reading Lesson, App, and Teaching Video</h3>
+        <p>A recorded B1 reading lesson at ILA Vietnam using the Zombie Survival Game, a choose-your-own-adventure activity built for the class. Students worked through survival scenarios requiring close reading, vocabulary use, and group decision-making.</p>
+        <p class="demonstrates"><strong>Demonstrates</strong>game-based reading instruction, lesson planning and design, classroom facilitation, connecting a learning tool to a specific lesson outcome</p>
+        <ul class="links">
+          <li><a href="https://www.youtube.com/watch?v=Rjse7mLKOV4">Watch lesson</a></li>
+          <li><a href="apps/zombie_game_v3.html">Open interactive zombie reading app</a></li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- Section 2: Planning, assessment, and student support -->
+<section class="sec sec-tint" id="planning" aria-labelledby="pa-title">
+  <div class="wrap">
+    <header class="sec-head">
+      <h2 id="pa-title">Planning, assessment, and student support</h2>
+    </header>
+    <div class="cards cards-3">
+      <article class="card" id="unit-plan">
+        <div class="card-img"><img src="assets/img/unit-plan.webp" width="900" height="565" alt="First page of the unit plan, The Past Around Us: Exploring History and Culture Through Language"></div>
+        <div class="card-body">
+          <h3>Unit Plan: Multidisciplinary English Instruction</h3>
+          <p>A complete unit plan for intermediate English learners at B1 level. The unit takes a multidisciplinary approach to language instruction, with structured lesson sequencing and clear learning objectives. Recognized by the course instructor as an exceptional example of unit-level curriculum planning.</p>
+          <p class="demonstrates"><strong>Demonstrates</strong>unit-level planning and sequencing, curriculum design, multidisciplinary integration, B1 English instruction</p>
+          <ul class="links card-links"><li><a href="portfolio/lesson_plans/u3a2-unit-plan.pdf">View unit plan</a></li></ul>
+        </div>
+      </article>
+      <article class="card" id="whos-your-idol">
+        <div class="card-img"><img class="fit" src="assets/img/idol-rubric.webp" width="1000" height="316" alt="The Who's Your Idol? project rubric: six criteria, each with five levels from Beginning to Exceptional"></div>
+        <div class="card-body">
+          <h3>"Who's Your Idol?" Project-Based Learning</h3>
+          <p>A two-lesson PBL unit for A2-level students (ages 9–11) at ILA Vietnam. Students researched a person they admired, created a poster, wrote a presentation script, and delivered an oral presentation to the class. Assessment used a six-criterion analytic rubric; group scores ranged from 4.4 to 5.0 out of 5. The reflection covers what worked, two specific challenges encountered, and two proposed improvements for a future iteration.</p>
+          <p class="demonstrates"><strong>Demonstrates</strong>project-based learning design, analytic rubric creation, oral language development, student-centered instruction, formative and summative assessment, reflective practice</p>
+          <ul class="links card-links"><li><a href="portfolio/whos-your-idol.html">View project reflection</a></li></ul>
+        </div>
+      </article>
+      <article class="card" id="supporting-learners">
+        <div class="card-img"><img src="assets/img/support-flow.webp" width="720" height="420" alt="Part of the support flowchart: step 1, in-class observation and Tier 1 supports; step 2, support team review and pre-referral"></div>
+        <div class="card-body">
+          <h3>Supporting Learners with Differences</h3>
+          <p>A proposed procedure for identifying and supporting students with learning differences at ILA Vietnam, developed during Moreland coursework. The work centers on a process flowchart for recognizing and escalating student support needs within a language school context.</p>
+          <p class="demonstrates"><strong>Demonstrates</strong>systems thinking about student support, differentiation planning, professional awareness of learner needs, practical planning for students with learning differences</p>
+          <ul class="links card-links"><li><a href="portfolio/iep_chart/chart.svg">View support flowchart</a></li></ul>
+        </div>
+      </article>
     </div>
+  </div>
+</section>
 
-    <!-- Section 2: Planning, Assessment, and Student Support -->
-    <div class="portfolio-section">
-        <p class="section-label">Planning, Assessment, and Student Support</p>
-
-        <div class="portfolio-card" id="unit-plan">
-            <h3>Unit Plan: Multidisciplinary English Instruction</h3>
-            <p>A complete unit plan for intermediate English learners at B1 level. The unit takes a multidisciplinary approach to language instruction, with structured lesson sequencing and clear learning objectives. Recognized by the course instructor as an exceptional example of unit-level curriculum planning.</p>
-            <p class="demonstrates"><strong>Demonstrates:</strong> unit-level planning and sequencing, curriculum design, multidisciplinary integration, B1 English instruction</p>
-            <div class="card-links">
-                <a href="portfolio/lesson_plans/u3a2-unit-plan.pdf">View unit plan</a>
-            </div>
-        </div>
-
-        <div class="portfolio-card" id="whos-your-idol">
-            <h3>"Who's Your Idol?" Project-Based Learning</h3>
-            <p>A two-lesson PBL unit for A2-level students (ages 9&ndash;11) at ILA Vietnam. Students researched a person they admired, created a poster, wrote a presentation script, and delivered an oral presentation to the class. Assessment used a six-criterion analytic rubric; group scores ranged from 4.4 to 5.0 out of 5. The reflection covers what worked, two specific challenges encountered, and two proposed improvements for a future iteration.</p>
-            <p class="demonstrates"><strong>Demonstrates:</strong> project-based learning design, analytic rubric creation, oral language development, student-centered instruction, formative and summative assessment, reflective practice</p>
-            <div class="card-links">
-                <a href="portfolio/whos-your-idol.html">View project reflection</a>
-            </div>
-        </div>
-
-        <div class="portfolio-card" id="supporting-learners">
-            <h3>Supporting Learners with Differences</h3>
-            <p>A proposed procedure for identifying and supporting students with learning differences at ILA Vietnam, developed during Moreland coursework. The work centers on a process flowchart for recognizing and escalating student support needs within a language school context.</p>
-            <p class="demonstrates"><strong>Demonstrates:</strong> systems thinking about student support, differentiation planning, professional awareness of learner needs, practical planning for students with learning differences</p>
-            <div class="card-links">
-                <a href="portfolio/iep_chart/chart.svg">View support flowchart</a>
-            </div>
-        </div>
-
+<!-- Section 3: Statistics demo lesson -->
+<section class="sec sec-dark" id="striker-scout" aria-labelledby="ss-title">
+  <div class="wrap">
+    <div class="ss-grid">
+      <div class="ss-copy">
+        <p class="kicker kicker-light">Statistics demo lesson</p>
+        <h2 id="ss-title">Striker Scout</h2>
+        <p>A statistics demo lesson on center and spread, built around football (soccer). I designed it for a job interview, demoed it, and redesigned it afterward. It includes slides, printed materials, and an interactive app.</p>
+      </div>
+      <ul class="kit" aria-label="Striker Scout materials">
+        <li class="kit-item">
+          <img src="assets/img/ss-slide-whiteboard.webp" width="700" height="500" alt="Slide from the lesson: a deviation table for students to complete on mini whiteboards">
+          <p>Slides</p>
+        </li>
+        <li class="kit-item">
+          <img src="assets/img/ss-report-cards.webp" width="660" height="405" alt="Printed scout report card: fitness and availability for four strikers">
+          <p>Printed materials</p>
+        </li>
+        <li class="kit-item kit-wide">
+          <img src="assets/img/ss-sim-strikers.webp" width="1200" height="270" alt="The interactive app: four strikers with five months of goals each">
+          <svg class="ss-plot" viewBox="0 0 1200 136" aria-hidden="true" focusable="false">
+          <g class="plot-col" style="--c:0;--hue:#8C5BA8">
+          <rect class="plot-band" x="88.6" y="14" width="92.8" height="86" rx="8"/>
+          <line class="plot-axis" x1="42.0" y1="100" x2="286.0" y2="100"/>
+          <line class="plot-tick" x1="48.0" y1="100" x2="48.0" y2="106"/>
+          <line class="plot-tick" x1="77.0" y1="100" x2="77.0" y2="104"/>
+          <line class="plot-tick" x1="106.0" y1="100" x2="106.0" y2="104"/>
+          <line class="plot-tick" x1="135.0" y1="100" x2="135.0" y2="104"/>
+          <line class="plot-tick" x1="164.0" y1="100" x2="164.0" y2="106"/>
+          <line class="plot-tick" x1="193.0" y1="100" x2="193.0" y2="104"/>
+          <line class="plot-tick" x1="222.0" y1="100" x2="222.0" y2="104"/>
+          <line class="plot-tick" x1="251.0" y1="100" x2="251.0" y2="104"/>
+          <line class="plot-tick" x1="280.0" y1="100" x2="280.0" y2="106"/>
+          <text class="plot-num" x="48.0" y="128">0</text>
+          <text class="plot-num" x="164.0" y="128">4</text>
+          <text class="plot-num" x="280.0" y="128">8</text>
+          <circle class="plot-dot" style="--i:0" cx="106.0" cy="86" r="11"/>
+          <circle class="plot-dot" style="--i:1" cx="193.0" cy="86" r="11"/>
+          <circle class="plot-dot" style="--i:2" cx="48.0" cy="86" r="11"/>
+          <circle class="plot-dot" style="--i:3" cx="135.0" cy="86" r="11"/>
+          <circle class="plot-dot" style="--i:4" cx="193.0" cy="61" r="11"/>
+          <line class="plot-mean" x1="135.0" y1="6" x2="135.0" y2="100"/>
+          </g>
+          <g class="plot-col" style="--c:1;--hue:#12917C">
+          <rect class="plot-band" x="443.4" y="14" width="23.2" height="86" rx="8"/>
+          <line class="plot-axis" x1="333.0" y1="100" x2="577.0" y2="100"/>
+          <line class="plot-tick" x1="339.0" y1="100" x2="339.0" y2="106"/>
+          <line class="plot-tick" x1="368.0" y1="100" x2="368.0" y2="104"/>
+          <line class="plot-tick" x1="397.0" y1="100" x2="397.0" y2="104"/>
+          <line class="plot-tick" x1="426.0" y1="100" x2="426.0" y2="104"/>
+          <line class="plot-tick" x1="455.0" y1="100" x2="455.0" y2="106"/>
+          <line class="plot-tick" x1="484.0" y1="100" x2="484.0" y2="104"/>
+          <line class="plot-tick" x1="513.0" y1="100" x2="513.0" y2="104"/>
+          <line class="plot-tick" x1="542.0" y1="100" x2="542.0" y2="104"/>
+          <line class="plot-tick" x1="571.0" y1="100" x2="571.0" y2="106"/>
+          <text class="plot-num" x="339.0" y="128">0</text>
+          <text class="plot-num" x="455.0" y="128">4</text>
+          <text class="plot-num" x="571.0" y="128">8</text>
+          <circle class="plot-dot" style="--i:0" cx="455.0" cy="86" r="11"/>
+          <circle class="plot-dot" style="--i:1" cx="484.0" cy="86" r="11"/>
+          <circle class="plot-dot" style="--i:2" cx="455.0" cy="61" r="11"/>
+          <circle class="plot-dot" style="--i:3" cx="426.0" cy="86" r="11"/>
+          <circle class="plot-dot" style="--i:4" cx="455.0" cy="36" r="11"/>
+          <line class="plot-mean" x1="455.0" y1="6" x2="455.0" y2="100"/>
+          </g>
+          <g class="plot-col" style="--c:2;--hue:#E8A317">
+          <rect class="plot-band" x="664.8" y="14" width="162.4" height="86" rx="8"/>
+          <line class="plot-axis" x1="624.0" y1="100" x2="868.0" y2="100"/>
+          <line class="plot-tick" x1="630.0" y1="100" x2="630.0" y2="106"/>
+          <line class="plot-tick" x1="659.0" y1="100" x2="659.0" y2="104"/>
+          <line class="plot-tick" x1="688.0" y1="100" x2="688.0" y2="104"/>
+          <line class="plot-tick" x1="717.0" y1="100" x2="717.0" y2="104"/>
+          <line class="plot-tick" x1="746.0" y1="100" x2="746.0" y2="106"/>
+          <line class="plot-tick" x1="775.0" y1="100" x2="775.0" y2="104"/>
+          <line class="plot-tick" x1="804.0" y1="100" x2="804.0" y2="104"/>
+          <line class="plot-tick" x1="833.0" y1="100" x2="833.0" y2="104"/>
+          <line class="plot-tick" x1="862.0" y1="100" x2="862.0" y2="106"/>
+          <text class="plot-num" x="630.0" y="128">0</text>
+          <text class="plot-num" x="746.0" y="128">4</text>
+          <text class="plot-num" x="862.0" y="128">8</text>
+          <circle class="plot-dot" style="--i:0" cx="862.0" cy="86" r="11"/>
+          <circle class="plot-dot" style="--i:1" cx="630.0" cy="86" r="11"/>
+          <circle class="plot-dot" style="--i:2" cx="659.0" cy="86" r="11"/>
+          <circle class="plot-dot" style="--i:3" cx="833.0" cy="86" r="11"/>
+          <circle class="plot-dot" style="--i:4" cx="746.0" cy="86" r="11"/>
+          <line class="plot-mean" x1="746.0" y1="6" x2="746.0" y2="100"/>
+          </g>
+          <g class="plot-col" style="--c:3;--hue:#E1553B">
+          <rect class="plot-band" x="1030.7" y="14" width="69.6" height="86" rx="8"/>
+          <line class="plot-axis" x1="914.5" y1="100" x2="1158.5" y2="100"/>
+          <line class="plot-tick" x1="920.5" y1="100" x2="920.5" y2="106"/>
+          <line class="plot-tick" x1="949.5" y1="100" x2="949.5" y2="104"/>
+          <line class="plot-tick" x1="978.5" y1="100" x2="978.5" y2="104"/>
+          <line class="plot-tick" x1="1007.5" y1="100" x2="1007.5" y2="104"/>
+          <line class="plot-tick" x1="1036.5" y1="100" x2="1036.5" y2="106"/>
+          <line class="plot-tick" x1="1065.5" y1="100" x2="1065.5" y2="104"/>
+          <line class="plot-tick" x1="1094.5" y1="100" x2="1094.5" y2="104"/>
+          <line class="plot-tick" x1="1123.5" y1="100" x2="1123.5" y2="104"/>
+          <line class="plot-tick" x1="1152.5" y1="100" x2="1152.5" y2="106"/>
+          <text class="plot-num" x="920.5" y="128">0</text>
+          <text class="plot-num" x="1036.5" y="128">4</text>
+          <text class="plot-num" x="1152.5" y="128">8</text>
+          <circle class="plot-dot" style="--i:0" cx="1123.5" cy="86" r="11"/>
+          <circle class="plot-dot" style="--i:1" cx="1036.5" cy="86" r="11"/>
+          <circle class="plot-dot" style="--i:2" cx="1094.5" cy="86" r="11"/>
+          <circle class="plot-dot" style="--i:3" cx="1065.5" cy="86" r="11"/>
+          <circle class="plot-dot" style="--i:4" cx="1007.5" cy="86" r="11"/>
+          <line class="plot-mean" x1="1065.5" y1="6" x2="1065.5" y2="100"/>
+          </g>
+          </svg>
+          <p class="plot-key" aria-hidden="true"><span class="ki"><span class="k k-dot"></span>One month's goals</span> <span class="ki"><span class="k k-mean"></span>Mean</span> <span class="ki"><span class="k k-band"></span>Mean &plusmn; mean absolute deviation</span></p>
+          <p>Interactive app</p>
+        </li>
+      </ul>
     </div>
+  </div>
+</section>
 
-</div>
+</main>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        fetch('header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header').innerHTML = data;
-            });
-    });
-</script>
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="foot-ask">Contact</p>
+    <a class="foot-mail" href="mailto:him@noahlibbyhaines.com">him@noahlibbyhaines.com</a>
+  </div>
+</footer>
 
 </body>
 </html>

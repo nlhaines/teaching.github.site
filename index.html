@@ -1,376 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noah Libby-Haines | Teacher</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-    <style>
-        /* Page-level overrides (index.html only) */
-        body {
-            background-color: #f8f6f2;
-            color: #2d3748;
-        }
-
-        .container {
-            padding: 32px 36px;
-            margin: 28px auto;
-            max-width: 920px;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-            border-radius: 4px;
-        }
-
-        /* Hero */
-        .hero {
-            display: flex;
-            align-items: flex-start;
-            gap: 36px;
-            padding-bottom: 32px;
-            border-bottom: 1px solid #e8e3db;
-            margin-bottom: 36px;
-        }
-
-        .hero-photo img {
-            border-radius: 50%;
-            width: 130px;
-            height: 130px;
-            object-fit: cover;
-            display: block;
-            flex-shrink: 0;
-        }
-
-        .hero-text h2 {
-            margin: 0 0 14px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1e2d40;
-            line-height: 1.3;
-        }
-
-        .hero-text p {
-            margin: 0 0 10px;
-            color: #4a5568;
-            max-width: 580px;
-        }
-
-        .hero-text .note {
-            font-size: 0.875rem;
-            color: #718096;
-        }
-
-        /* Section label */
-        .section-label {
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: #718096;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin: 0 0 20px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #e8e3db;
-        }
-
-        /* Teaching approach */
-        .teaching-profile {
-            margin-bottom: 44px;
-        }
-
-        .profile-grid {
-            display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
-            margin-bottom: 22px;
-        }
-
-        .profile-card {
-            flex: 1;
-            min-width: 180px;
-            background: #f8f6f2;
-            border: 1px solid #e8e3db;
-            border-radius: 5px;
-            padding: 18px 20px;
-        }
-
-        .profile-card h3 {
-            margin: 0 0 8px;
-            font-size: 0.76rem;
-            font-weight: 700;
-            color: #2c6e8a;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .profile-card p {
-            margin: 0;
-            font-size: 0.9rem;
-            color: #4a5568;
-            line-height: 1.6;
-        }
-
-        .philosophy-text {
-            font-size: 0.93rem;
-            color: #4a5568;
-            line-height: 1.75;
-            margin: 0;
-            max-width: 640px;
-        }
-
-        /* Apps section */
-        .apps-section {
-            margin-bottom: 44px;
-        }
-
-        .apps-intro {
-            font-size: 0.93rem;
-            color: #4a5568;
-            margin: 0 0 24px;
-            max-width: 640px;
-            line-height: 1.65;
-        }
-
-        .app-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 24px;
-        }
-
-        .app-row + .app-row {
-            margin-top: 24px;
-            padding-top: 24px;
-            border-top: 1px solid #e8e3db;
-        }
-
-        .app-row img {
-            width: 180px;
-            height: auto;
-            flex-shrink: 0;
-            border-radius: 4px;
-            border: 1px solid #e8e3db;
-        }
-
-        .app-row-text h3 {
-            margin: 0 0 8px;
-            font-size: 1rem;
-            font-weight: 700;
-            color: #1e2d40;
-        }
-
-        .app-row-text p {
-            margin: 0 0 10px;
-            color: #4a5568;
-            font-size: 0.9rem;
-            line-height: 1.65;
-        }
-
-        .app-row-text a {
-            color: #2c6e8a;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-        }
-
-        .app-row-text a:hover {
-            text-decoration: underline;
-        }
-
-        /* Portfolio */
-        .portfolio-preview {
-            margin-bottom: 0;
-        }
-
-        .portfolio-intro {
-            font-size: 0.93rem;
-            color: #4a5568;
-            margin: 0 0 20px;
-            max-width: 680px;
-            line-height: 1.65;
-        }
-
-        .portfolio-preview-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .portfolio-preview-card {
-            border: 1px solid #e8e3db;
-            border-radius: 4px;
-            padding: 14px 16px;
-        }
-
-        .portfolio-preview-card a {
-            display: block;
-            font-size: 0.88rem;
-            font-weight: 700;
-            color: #1e2d40;
-            text-decoration: none;
-            margin-bottom: 4px;
-            line-height: 1.4;
-        }
-
-        .portfolio-preview-card a:hover {
-            color: #2c6e8a;
-        }
-
-        .portfolio-preview-card p {
-            font-size: 0.82rem;
-            color: #718096;
-            margin: 0;
-            line-height: 1.5;
-        }
-
-        .portfolio-view-all {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: #2c6e8a;
-            text-decoration: none;
-        }
-
-        .portfolio-view-all:hover {
-            text-decoration: underline;
-        }
-
-        /* Responsive */
-        @media (max-width: 680px) {
-            .container {
-                padding: 20px 18px;
-                margin: 12px auto;
-            }
-
-            .hero {
-                flex-direction: column;
-                gap: 16px;
-            }
-
-            .hero-photo img {
-                width: 100px;
-                height: 100px;
-            }
-
-            .profile-grid {
-                flex-direction: column;
-            }
-
-            .app-row {
-                flex-direction: column;
-            }
-
-            .app-row img {
-                width: 100%;
-                max-width: 280px;
-            }
-
-            .portfolio-preview-grid {
-                grid-template-columns: 1fr;
-            }
-
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noah Libby-Haines | Teacher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/motion.js"></script>
+<link rel="icon" href="data:,">
 </head>
 <body>
 
-<div id="header"></div>
+<a class="skip" href="#main">Skip to content</a>
 
-<div class="container">
+<header class="bar">
+  <div class="bar-in">
+    <p class="bar-name">Noah Libby-Haines</p>
+    <nav class="bar-nav" aria-label="Site">
+      <a class="ico" href="mailto:him@noahlibbyhaines.com" aria-label="Email Noah Libby-Haines"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+      <a class="ico" href="index.html" aria-label="Home" aria-current="page"><i class="fas fa-home" aria-hidden="true"></i></a>
+      <a class="ico" href="https://github.com/nlhaines/" aria-label="GitHub profile"><i class="fab fa-github" aria-hidden="true"></i></a>
+      <a href="resume.html">Resume</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="apps.html">Teaching Apps</a>
+    </nav>
+  </div>
+</header>
 
-    <!-- Hero -->
-    <section class="hero">
-        <div class="hero-photo">
-            <img src="photos/headshot.jpeg" alt="Noah Libby-Haines">
+<main id="main">
+
+<!-- Hero -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1>Noah Libby&#8209;Haines</h1>
+      <p class="lede">Teacher, technologist, and lifelong learner</p>
+      <p class="sub">I am a teacher based in Hanoi, Vietnam, with classroom experience teaching Vietnamese learners ages 4–15 and an academic background in statistics, computer science, and mathematics. I am open to ESL, Mathematics, Computer Science, and hybrid teaching roles.</p>
+      <div class="cta">
+        <a class="btn btn-solid" href="mailto:him@noahlibbyhaines.com">Email</a>
+        <a class="btn btn-line" href="resume.html">Resume</a>
+        <a class="btn btn-text" href="portfolio.html#recorded-lessons">Recorded lessons <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+
+    <aside class="glance" aria-labelledby="glance-title">
+      <div class="glance-head">
+        <img class="glance-photo" src="photos/headshot.jpeg" width="500" height="500" alt="Noah Libby-Haines">
+        <div>
+          <h2 id="glance-title">At a glance</h2>
+          <p class="status status-avail">Available for new roles starting January 2027</p>
         </div>
-        <div class="hero-text">
-            <h2>Teacher, technologist, and lifelong learner</h2>
-            <p>I am a teacher based in Hanoi, Vietnam, with classroom experience teaching Vietnamese learners ages 4&ndash;15 and an academic background in statistics, computer science, and mathematics. I use clear structure, questioning, student agency, and thoughtfully chosen technology to support learning.</p>
-            <p class="note">U.S.-licensed teacher, District of Columbia (ESL, K&ndash;12), with Computer Science and Secondary Mathematics endorsements in progress.</p>
-        </div>
-    </section>
+      </div>
+      <dl class="glance-list">
+        <div><dt>Based in</dt><dd>Hanoi, Vietnam</dd></div>
+        <div><dt>License</dt><dd>United States Teaching License — District of Columbia <span class="nw">(ESL, K–12)</span>, with Computer Science and Secondary Mathematics subject endorsements in progress</dd></div>
+        <div><dt>Degrees</dt><dd>M.A. in Statistics, UC Berkeley<br>B.S. in Computer Science, Minor in Mathematics, Boston College</dd></div>
+        <div><dt>Recent teaching</dt><dd>English, full time, ILA Vietnam, Ho Chi Minh City, ages 4–15</dd></div>
+      </dl>
+    </aside>
+  </div>
+</section>
 
-    <!-- Teaching approach -->
-    <section class="teaching-profile">
-        <p class="section-label">Teaching Approach</p>
-        <div class="profile-grid">
-            <div class="profile-card">
-                <h3>Classroom Experience</h3>
-                <p>Recent full-time classroom teaching experience in Vietnam, working with learners from early years through lower secondary. Earlier instructional experience includes introductory programming and undergraduate statistics.</p>
-            </div>
-            <div class="profile-card">
-                <h3>Academic Background</h3>
-                <p>MA in Statistics from UC Berkeley. BS in Computer Science from Boston College. Strong foundations in quantitative reasoning and research methods.</p>
-            </div>
-            <div class="profile-card">
-                <h3>Technology in the Classroom</h3>
-                <p>I build original classroom tools and use them in class to support engagement, collaboration, review, and participation. This includes quick tools designed for a specific learning outcome, as well as reusable activities that can support review, practice, and participation across lessons.</p>
-            </div>
-        </div>
-        <p class="philosophy-text">My teaching emphasizes clarity, structure, and genuine understanding over surface-level performance. I am especially interested in helping learners access complex ideas through strong questioning, game-based practice, metacognition, and targeted scaffolding. I try to choose and adapt classroom materials to fit the needs of the students in front of me, whether that means adapting existing resources, or creating something new.</p>
-    </section>
+<!-- Teaching approach -->
+<section class="stance" aria-labelledby="approach-title">
+  <div class="wrap">
+    <div class="stance-grid">
+      <h2 id="approach-title">How I teach</h2>
+      <div class="stance-body">
+        <p>I want lessons to be fun, and I plan them to be flexible, using UDL principles so students have more than one way into the material. I use game-based practice where it helps, build on students' own culture and interests, and give them real choices in their work. I try to choose and adapt classroom materials to fit the students in front of me, whether that means adapting existing resources or creating something new.</p>
+      </div>
+    </div>
+    <div class="facets">
+      <div class="facet">
+        <h3>Classroom experience</h3>
+        <p>Recent full-time classroom teaching experience in Vietnam, working with learners from early years through lower secondary. Earlier instructional experience includes introductory programming and undergraduate statistics.</p>
+      </div>
+      <div class="facet">
+        <h3>Academic background</h3>
+        <p>MA in Statistics from UC Berkeley. BS in Computer Science, with a minor in Mathematics, from Boston College.</p>
+      </div>
+      <div class="facet">
+        <h3>Technology in the classroom</h3>
+        <p>I build my own classroom tools, mostly games, and use them with students for review, practice, and whole-class participation.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Apps -->
-    <section class="apps-section">
-        <p class="section-label">Teaching Apps</p>
-        <p class="apps-intro">I create browser-based classroom activities to support specific lesson goals, such as vocabulary and grammar practice, reading in context, exam preparation, and whole-class participation. Some are quick one-off tools for a single class; others are reusable activities that can be adapted across lessons.</p>
-        <div class="app-row">
-            <img src="photos/classroom_apps.png" alt="Language Learning Suite">
-            <div class="app-row-text">
-                <h3>Language Learning Suite</h3>
-                <p>A suite of classroom vocabulary and grammar activities: a teacher-run class game with multiple game formats, a student self-study arcade for independent practice, and a unit content builder. All three tools share the same lesson content, supporting whole-class activities, independent review, and lesson preparation within one system.</p>
-                <p>Deployed with students at ILA Vietnam.</p>
-                <a href="apps.html">View all teaching apps</a>
-            </div>
-        </div>
-        <div class="app-row">
-            <img src="photos/zombie_survival_thumb.png" alt="Zombie Survival Game">
-            <div class="app-row-text">
-                <h3>Zombie Survival Game</h3>
-                <p>A choose-your-own-adventure reading activity for B1 English learners. Students work through survival scenarios that require reading, vocabulary use, and group decision-making.</p>
-                <a href="apps/zombie_game_v3.html">Open app</a>
-            </div>
-        </div>
-    </section>
+<!-- Teaching apps -->
+<section class="sec" id="apps" aria-labelledby="apps-title">
+  <div class="wrap">
+    <header class="sec-head">
+      <h2 id="apps-title">Teaching apps</h2>
+      <p class="sec-intro">I create browser-based classroom activities to support specific lesson goals, such as vocabulary and grammar practice, reading in context, exam preparation, and whole-class participation. Some are quick one-off tools for a single class; others are reusable activities that can be adapted across lessons.</p>
+    </header>
 
-    <!-- Portfolio -->
-    <section class="portfolio-preview">
-        <p class="section-label">Teaching Portfolio</p>
-        <p class="portfolio-intro">Selected teaching artifacts from classroom practice at ILA Vietnam and Moreland teacher preparation work, including recorded lessons, classroom tools, and project-based learning.</p>
-        <div class="portfolio-preview-grid">
-            <div class="portfolio-preview-card">
-                <a href="portfolio.html#classroom-games">Custom Classroom Games: Language Learning Suite in Practice</a>
-                <p>Recorded lesson with vocabulary and grammar games at ILA Vietnam</p>
-            </div>
-            <div class="portfolio-preview-card">
-                <a href="portfolio.html#zombie-survival">Zombie Survival Game: Reading Lesson, App, and Teaching Video</a>
-                <p>Recorded B1 reading lesson, lesson plan, and classroom app</p>
-            </div>
-            <div class="portfolio-preview-card">
-                <a href="portfolio.html#unit-plan">Unit Plan: Multidisciplinary English Instruction</a>
-                <p>B1 unit-level planning, sequencing, and curriculum design</p>
-            </div>
-            <div class="portfolio-preview-card">
-                <a href="portfolio.html#whos-your-idol">&ldquo;Who&rsquo;s Your Idol?&rdquo; Project-Based Learning Unit</a>
-                <p>Project-based learning, analytic rubric, and teaching reflection</p>
-            </div>
-            <div class="portfolio-preview-card">
-                <a href="portfolio.html#supporting-learners">Supporting Learners with Differences</a>
-                <p>Student support planning and differentiation systems</p>
-            </div>
+    <article class="pair">
+      <div class="pair-media">
+        <a class="frame frame-class" href="https://youtu.be/0RWtmdgBrx8" aria-label="Watch lesson: Language Learning Suite in a recorded class (YouTube)">
+          <img src="assets/img/class-games-lesson.webp" width="1280" height="720" alt="Recorded classroom games lesson">
+          <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="frame-label">Watch lesson</span>
+        </a>
+        <div class="frame frame-app">
+          <img src="assets/img/app-auction.webp" width="1200" height="750" alt="Sentence Auction, one of the classroom games: English sentences with errors for teams to bid on and correct">
         </div>
-        <a href="portfolio.html" class="portfolio-view-all">View full teaching portfolio</a>
-    </section>
+      </div>
+      <div class="pair-text">
+        <h3>Language Learning Suite</h3>
+        <p>A suite of classroom vocabulary and grammar activities: a teacher-run class game with multiple game formats, a student self-study arcade for independent practice, and a unit content builder. All three tools share the same lesson content, supporting whole-class activities, independent review, and lesson preparation within one system.</p>
+        <p class="note-line">Deployed with students at ILA Vietnam.</p>
+        <ul class="links">
+          <li><a href="apps.html">View all teaching apps</a></li>
+        </ul>
+      </div>
+    </article>
 
-</div>
+    <article class="pair pair-flip">
+      <div class="pair-media">
+        <a class="frame frame-class" href="https://www.youtube.com/watch?v=Rjse7mLKOV4" aria-label="Watch lesson: Zombie Survival Game in a recorded reading lesson (YouTube)">
+          <img src="assets/img/class-zombie-lesson.webp" width="1280" height="720" alt="Recorded zombie survival reading lesson">
+          <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="frame-label">Watch lesson</span>
+        </a>
+        <div class="frame frame-app">
+          <img src="assets/img/app-zombie-kit.webp" width="1200" height="688" alt="Zombie Survival Game setup screen where each team chooses survival items and team members">
+        </div>
+      </div>
+      <div class="pair-text">
+        <h3>Zombie Survival Game</h3>
+        <p>A choose-your-own-adventure reading activity for B1 English learners. Students work through survival scenarios that require reading, vocabulary use, and group decision-making.</p>
+        <ul class="links">
+          <li><a href="apps/zombie_game_v3.html">Open app</a></li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        fetch('header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header').innerHTML = data;
-            });
-    });
-</script>
+<!-- Teaching portfolio -->
+<section class="sec sec-tint" id="portfolio" aria-labelledby="portfolio-title">
+  <div class="wrap">
+    <header class="sec-head">
+      <h2 id="portfolio-title">Teaching portfolio</h2>
+      <p class="sec-intro">Selected teaching artifacts from classroom practice at ILA Vietnam and Moreland teacher preparation work, including recorded lessons, classroom tools, and project-based learning.</p>
+    </header>
+    <div class="cards cards-3">
+      <a class="card" href="portfolio.html#classroom-games">
+        <div class="card-img"><img src="assets/img/class-games-lesson.webp" width="1280" height="720" alt=""><span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></div>
+        <div class="card-body">
+          <p class="card-k">Recorded lesson</p>
+          <h3>Custom Classroom Games: Language Learning Suite in Practice</h3>
+          <p>Recorded lesson with vocabulary and grammar games at ILA Vietnam</p>
+        </div>
+      </a>
+      <a class="card" href="portfolio.html#zombie-survival">
+        <div class="card-img"><img src="assets/img/class-zombie-lesson.webp" width="1280" height="720" alt=""><span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></div>
+        <div class="card-body">
+          <p class="card-k">Recorded lesson</p>
+          <h3>Zombie Survival Game: Reading Lesson, App, and Teaching Video</h3>
+          <p>Recorded B1 reading lesson and classroom app</p>
+        </div>
+      </a>
+      <a class="card" href="portfolio.html#unit-plan">
+        <div class="card-img"><img src="assets/img/unit-plan.webp" width="900" height="565" alt=""></div>
+        <div class="card-body">
+          <p class="card-k">Unit plan</p>
+          <h3>Unit Plan: Multidisciplinary English Instruction</h3>
+          <p>B1 unit-level planning, sequencing, and curriculum design</p>
+        </div>
+      </a>
+      <a class="card" href="portfolio.html#whos-your-idol">
+        <div class="card-img"><img class="fit" src="assets/img/idol-rubric.webp" width="1000" height="316" alt=""></div>
+        <div class="card-body">
+          <p class="card-k">Project-based learning</p>
+          <h3>“Who’s Your Idol?” Project-Based Learning Unit</h3>
+          <p>Project-based learning, analytic rubric, and teaching reflection</p>
+        </div>
+      </a>
+      <a class="card" href="portfolio.html#supporting-learners">
+        <div class="card-img"><img src="assets/img/support-flow.webp" width="720" height="420" alt=""></div>
+        <div class="card-body">
+          <p class="card-k">Student support</p>
+          <h3>Supporting Learners with Differences</h3>
+          <p>Student support planning and differentiation systems</p>
+        </div>
+      </a>
+      <a class="card" href="portfolio.html#striker-scout">
+        <div class="card-img"><img src="assets/img/ss-slide-whiteboard.webp" width="700" height="500" alt=""></div>
+        <div class="card-body">
+          <p class="card-k">Statistics demo lesson</p>
+          <h3>Striker Scout</h3>
+          <p>A statistics demo lesson on center and spread, built around football (soccer). I designed it for a job interview, demoed it, and redesigned it afterward.</p>
+        </div>
+      </a>
+    </div>
+    <p class="more"><a href="portfolio.html">View full teaching portfolio</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="foot-ask">Contact</p>
+    <a class="foot-mail" href="mailto:him@noahlibbyhaines.com">him@noahlibbyhaines.com</a>
+  </div>
+</footer>
 
 </body>
 </html>

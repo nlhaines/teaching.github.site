@@ -1,0 +1,51 @@
+/* Resume: document-like, dense, printable. Loaded after site.css. */
+.resume{max-width:900px;margin:clamp(20px,3vw,44px) auto clamp(48px,6vw,88px);background:var(--card);border:1px solid var(--line);border-radius:16px;padding:clamp(22px,3.2vw,44px) clamp(20px,3.6vw,52px);box-shadow:0 1px 0 rgba(30,44,79,.04),0 18px 40px -28px rgba(30,44,79,.3);font-size:15.5px;line-height:1.5;color:var(--ink-2)}
+.resume a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+.resume a:hover{border-bottom-color:var(--coral)}
+
+.resume .header{border-bottom:1.5px solid var(--ink);padding-bottom:18px;margin-bottom:6px}
+.resume .profile-container{display:flex;align-items:center;gap:24px}
+.resume .profile-picture{width:104px;height:104px;border-radius:50%;object-fit:cover;flex:none}
+.resume .profile-details{flex:1}
+.resume .profile-details h1{font-size:clamp(1.9rem,3.4vw,2.6rem);letter-spacing:-0.02em;color:var(--ink);margin:0 0 2px}
+.resume .contact-info{margin-top:8px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;font-size:.95rem}
+.resume .contact-info i{color:var(--ink-3);font-size:.85rem}
+.resume .icon{width:20px;height:20px;vertical-align:middle;display:inline-block}
+
+.resume .section{margin-top:20px}
+.resume .section h2{font-family:var(--sans);font-weight:600;font-size:.8rem;letter-spacing:.09em;text-transform:uppercase;color:var(--coral-ink);border-bottom:1px solid var(--line);padding-bottom:6px;margin:0 0 10px}
+.resume .section p{margin:0 0 8px}
+.resume ul{margin:6px 0 10px;padding-left:22px}
+.resume li{margin-bottom:4px}
+.resume .skills ul{list-style:none;padding-left:0}
+.resume .skills li{margin-bottom:6px}
+.resume strong{color:var(--ink);font-weight:600}
+.resume .job-entry,.resume .education-entry,.resume .reference-entry{display:flex;justify-content:space-between;align-items:baseline;gap:6px 16px;flex-wrap:wrap}
+.resume .job-entry{margin-top:12px}
+.resume .job-title,.resume .degree{font-weight:600;color:var(--ink);font-size:1rem}
+.resume .job-entry span:last-child,.resume .education-entry span:last-child{font-size:.9rem;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.resume .education div{margin-bottom:6px}
+.resume .distinctions{font-size:.88rem;padding-left:0;margin:2px 0 4px;color:var(--ink-3)}
+
+@media (max-width:640px){
+  .resume{margin:0;border-radius:0;border-left:0;border-right:0;font-size:15px}
+  .resume .profile-container{flex-direction:column;align-items:flex-start;gap:14px}
+  .resume .profile-picture{width:84px;height:84px}
+}
+
+/* ---------- print: the resume only ---------- */
+@page{size:auto;margin:12mm 13mm}
+@media print{
+  html{scroll-behavior:auto}
+  body{background:#fff;font-size:10.5pt}
+  .bar,.skip,.foot{display:none !important}
+  .resume{max-width:none;margin:0;padding:0;border:0;border-radius:0;box-shadow:none;font-size:10pt;line-height:1.38;color:#222}
+  .resume a{border-bottom:0;color:#111}
+  .resume .header{padding-bottom:10px}
+  .resume .profile-picture{width:78px;height:78px}
+  .resume .profile-details h1{font-size:20pt}
+  .resume .section{margin-top:11px;break-inside:auto}
+  .resume .section h2{color:#9b2f1b;font-size:8.5pt;margin-bottom:6px;break-after:avoid}
+  .resume .job-entry,.resume .education-entry{break-after:avoid}
+  .resume li{break-inside:avoid}
+}

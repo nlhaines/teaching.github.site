@@ -1,183 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teaching Apps by Noah Libby-Haines</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        /* Page-level overrides */
-        body {
-            background-color: #f8f6f2;
-            color: #2d3748;
-        }
-
-        .container {
-            width: 80%;
-            padding: 32px 36px;
-            margin: 28px auto;
-            max-width: 920px;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        /* Section label */
-        .section-label {
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: #718096;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin: 0 0 20px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #e8e3db;
-        }
-
-        /* Page intro */
-        .page-intro {
-            font-size: 0.93rem;
-            color: #4a5568;
-            margin: 0 0 28px;
-            max-width: 640px;
-            line-height: 1.65;
-        }
-
-        /* App items */
-        .apps-section {
-            margin-bottom: 0;
-        }
-
-        .app-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 24px;
-            padding-bottom: 28px;
-            margin-bottom: 28px;
-            border-bottom: 1px solid #e8e3db;
-        }
-
-        .app-item:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-            margin-bottom: 0;
-        }
-
-        .app-item img {
-            width: 180px;
-            height: auto;
-            flex-shrink: 0;
-            border-radius: 4px;
-            border: 1px solid #e8e3db;
-        }
-
-        .app-description {
-            flex: 1;
-        }
-
-        .app-description h3 {
-            margin: 0 0 8px;
-            font-size: 1rem;
-            font-weight: 700;
-            color: #1e2d40;
-        }
-
-        .app-description p {
-            font-size: 0.9rem;
-            color: #4a5568;
-            line-height: 1.65;
-            margin: 0 0 10px;
-        }
-
-        .app-description ol {
-            font-size: 0.9rem;
-            color: #4a5568;
-            line-height: 1.65;
-            margin: 0 0 10px;
-            padding-left: 20px;
-        }
-
-        .app-links a {
-            color: #2c6e8a;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            margin-right: 15px;
-        }
-
-        .app-links a:hover {
-            text-decoration: underline;
-        }
-
-        /* Responsive */
-        @media (max-width: 680px) {
-            .container {
-                padding: 20px 18px;
-                margin: 12px auto;
-            }
-
-            .app-item {
-                flex-direction: column;
-            }
-
-            .app-item img {
-                width: 100%;
-                max-width: 280px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teaching Apps by Noah Libby-Haines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/motion.js"></script>
+<link rel="icon" href="data:,">
 </head>
 <body>
 
-<div id="header"></div>
+<a class="skip" href="#main">Skip to content</a>
 
-<div class="container">
-    <section class="apps-section">
-        <p class="section-label">Teaching Apps</p>
-        <p class="page-intro">These are browser-based classroom activities I have built and used with students at ILA Vietnam.</p>
+<header class="bar">
+  <div class="bar-in">
+    <p class="bar-name">Noah Libby-Haines</p>
+    <nav class="bar-nav" aria-label="Site">
+      <a class="ico" href="mailto:him@noahlibbyhaines.com" aria-label="Email Noah Libby-Haines"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+      <a class="ico" href="index.html" aria-label="Home"><i class="fas fa-home" aria-hidden="true"></i></a>
+      <a class="ico" href="https://github.com/nlhaines/" aria-label="GitHub profile"><i class="fab fa-github" aria-hidden="true"></i></a>
+      <a href="resume.html">Resume</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="apps.html" aria-current="page">Teaching Apps</a>
+    </nav>
+  </div>
+</header>
 
-        <div class="app-item">
-            <img src="photos/language_arcade.png" alt="Language Learning Suite">
-            <div class="app-description">
-                <h3>Language Learning Suite</h3>
-                <p>A suite of three linked classroom tools for vocabulary and grammar practice:</p>
-                <ol>
-                    <li>a teacher-run game platform with multiple game formats and a class scoring system,</li>
-                    <li>a student self-study arcade for independent practice and review,</li>
-                    <li>and a content builder for creating and editing unit materials.</li>
-                </ol>
-                <p>All three tools run from the same lesson content, making it easy to support whole-class activities, student self-study, and ongoing lesson refinement within one system.</p>
-                <div class="app-links">
-                    <a href="apps/LL-game/classroom.html">Classroom tool</a>
-                    <a href="apps/LL-game/index.html">Student arcade</a>
-                    <a href="apps/LL-game/builder.html">Unit builder</a>
-                </div>
-            </div>
+<main id="main">
+
+<section class="page-head">
+  <div class="wrap">
+    <h1>Teaching apps</h1>
+    <p class="page-intro">These are browser-based classroom activities I have built and used with students at ILA Vietnam.</p>
+  </div>
+</section>
+
+<section class="sec" aria-label="Teaching apps">
+  <div class="wrap">
+
+    <article class="pair" id="language-learning-suite">
+      <div class="pair-media">
+        <a class="frame frame-class" href="apps/LL-game/classroom.html" aria-label="Open the classroom tool">
+          <img src="assets/img/app-classroom-setup.webp" width="1200" height="750" alt="Classroom tool setup screen: course units, team rosters and a choice of game formats">
+        </a>
+        <a class="frame frame-app" href="apps/LL-game/index.html" aria-label="Open the student arcade">
+          <img src="assets/img/app-arcade.webp" width="1200" height="625" alt="Student arcade home screen with a course card for J4B English">
+        </a>
+      </div>
+      <div class="pair-text">
+        <h3>Language Learning Suite</h3>
+        <p>A suite of three linked classroom tools for vocabulary and grammar practice:</p>
+        <ol>
+          <li>a teacher-run game platform with multiple game formats and a class scoring system,</li>
+          <li>a student self-study arcade for independent practice and review,</li>
+          <li>and a content builder for creating and editing unit materials.</li>
+        </ol>
+        <p>All three tools run from the same lesson content, making it easy to support whole-class activities, student self-study, and ongoing lesson refinement within one system.</p>
+        <ul class="links">
+          <li><a href="apps/LL-game/classroom.html">Classroom tool</a></li>
+          <li><a href="apps/LL-game/index.html">Student arcade</a></li>
+          <li><span class="off">Unit builder <small>(currently unavailable)</small></span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="pair pair-flip" id="zombie-survival">
+      <div class="pair-media">
+        <a class="frame frame-class" href="apps/zombie_game_v3.html" aria-label="Open the Zombie Survival Game">
+          <img src="assets/img/app-zombie-kit.webp" width="1200" height="688" alt="Zombie Survival Game setup screen where each team chooses survival items and team members">
+        </a>
+        <div class="frame frame-app">
+          <img src="photos/zombie_survival_thumb.png" width="902" height="407" alt="Zombie Survival Game title screen">
         </div>
+      </div>
+      <div class="pair-text">
+        <h3>Zombie Survival Game</h3>
+        <p>A choose-your-own-adventure reading activity for B1 English learners. Students work through survival scenarios that require reading, vocabulary use, and group decision-making. The game supports movement through an optional sticky-ball throw that can replace the dice-roll mechanic.</p>
+        <ul class="links">
+          <li><a href="apps/zombie_game_v3.html">Open app</a></li>
+        </ul>
+      </div>
+    </article>
 
-        <div class="app-item">
-            <img src="photos/zombie_survival_thumb.png" alt="Zombie Survival Game">
-            <div class="app-description">
-                <h3>Zombie Survival Game</h3>
-                <p>A choose-your-own-adventure reading activity for B1 English learners. Students work through survival scenarios that require reading, vocabulary use, and group decision-making. The game supports movement through an optional sticky-ball throw that can replace the dice-roll mechanic.</p>
-                <div class="app-links">
-                    <a href="apps/zombie_game_v3.html">Open app</a>
-                </div>
-            </div>
-        </div>
-    </section>
-</div>
+  </div>
+</section>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        fetch('header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header').innerHTML = data;
-            });
-    });
-</script>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="foot-ask">Contact</p>
+    <a class="foot-mail" href="mailto:him@noahlibbyhaines.com">him@noahlibbyhaines.com</a>
+  </div>
+</footer>
 
 </body>
 </html>
