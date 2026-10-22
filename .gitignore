@@ -13,6 +13,15 @@ stats_teaching_demo/
 
 # Intentionally local source files.
 portfolio/lesson_plans/U3A2 - Unit Plan.docx
+# Unpublished lesson-plan sources (may contain student names).
+portfolio/lesson_plans/local_source/
+
+# Build manifest for the curated Striker Scout files; internal only.
+portfolio/striker_scout/MANIFEST.json
+
+# Class rosters for the classroom games app hold student names.
+# Load them in the app locally; never publish them.
+apps/LL-game/*.class.json
 
 # Python caches.
 __pycache__/

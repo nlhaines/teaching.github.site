@@ -189,13 +189,16 @@ a.card:active{transform:scale(.985)}
 .sec-dark::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 60%);mask-image:linear-gradient(90deg,transparent,#000 60%)}
 .ss-grid{position:relative;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(36px,5vw,84px);align-items:center}
 .sec-dark h2{color:#fff;margin-bottom:16px}
-.ss-copy > p{color:#C5CCDB;max-width:52ch}
+.ss-copy > p{color:#C5CCDB;max-width:52ch;margin-bottom:16px}
 .ss-copy .status{margin-bottom:18px}
 .kit{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .kit-item{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:10px 10px 14px;display:flex;flex-direction:column;gap:10px}
 .kit-item img{width:100%;height:auto;border-radius:8px;background:#fff}
 .kit-wide{grid-column:1/-1}
 .kit-item p{font-size:.88rem;font-weight:600;color:#E9ECF3;padding:0 4px}
+.sec-dark .links a{color:#fff}
+.sec-dark .demonstrates{border-left-color:rgba(255,255,255,.2)}
+.sec-dark .demonstrates strong{color:#C5CCDB}
 
 /* ---------- article (Who's Your Idol) ---------- */
 .article{max-width:760px;margin:0 auto;padding:clamp(36px,5vw,72px) var(--gut) clamp(64px,8vw,112px)}
