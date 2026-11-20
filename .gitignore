@@ -23,6 +23,9 @@ portfolio/striker_scout/MANIFEST.json
 # Load them in the app locally; never publish them.
 apps/LL-game/*.class.json
 
+# Private personal study apps; never publish.
+noahs-secret-folder/
+
 # Python caches.
 __pycache__/
 *.pyc
